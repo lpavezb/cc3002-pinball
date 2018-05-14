@@ -24,4 +24,6 @@ public interface Hittable {
      * @return the current score of the object when hit
      */
     int getScore();
+
+    void setScore(int score);
 }
