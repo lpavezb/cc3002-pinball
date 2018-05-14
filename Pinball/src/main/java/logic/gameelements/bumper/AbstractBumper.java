@@ -2,12 +2,16 @@ package logic.gameelements.bumper;
 
 public abstract class AbstractBumper implements Bumper {
     private int score;
+    private int initialScore;
+    private int upgradeScore;
     private int hitTimesToUpgrade;
     private int timesHit;
     private boolean upgraded;
 
-    public AbstractBumper(int nHitTimesToUpgrade, int anScore){
-        score = anScore;
+    public AbstractBumper(int nHitTimesToUpgrade, int aInitialScore, int aUpgradeScore){
+        initialScore = aInitialScore;
+        upgradeScore = aUpgradeScore;
+        score = initialScore;
         hitTimesToUpgrade = nHitTimesToUpgrade;
         upgraded = false;
     }
@@ -20,6 +24,22 @@ public abstract class AbstractBumper implements Bumper {
     @Override
     public boolean isUpgraded() {
         return upgraded;
+    }
+
+    @Override
+    public void upgrade() {
+        this.setUpgrade(true);
+        this.setScore(upgradeScore);
+        double random = Math.random();
+        if(random < 0.1){
+            //TODO: trigger ExtraBallBonus
+        }
+    }
+
+    @Override
+    public void downgrade() {
+        this.setUpgrade(false);
+        this.setScore(initialScore);
     }
 
     @Override
