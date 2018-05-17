@@ -118,8 +118,8 @@ public class Game implements Observer {
     /**
      * Sets the points earned so far.
      */
-    public void setScore(int newScore) {
-        score = newScore;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     /**
@@ -135,14 +135,12 @@ public class Game implements Observer {
     /**
      * Sets a new table to play.
      *
-     * @param newTable the new table
+     * @param table the new table
      */
-    public void setGameTable(Table newTable) {
+    public void setGameTable(Table table) {
         playableTable = true;
-        table = newTable;
+        this.table = table;
     }
-
-
 
     /**
      * Increase the number of available balls and returns the new number.
