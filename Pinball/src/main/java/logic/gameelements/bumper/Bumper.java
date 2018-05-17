@@ -34,5 +34,5 @@ public interface Bumper extends Hittable {
      */
     void downgrade();
 
-    void setUpgrade(boolean upgrade);
+    void setSeed(long seed);
 }

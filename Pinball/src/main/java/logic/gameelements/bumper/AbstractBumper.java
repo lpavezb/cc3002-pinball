@@ -1,67 +1,62 @@
 package logic.gameelements.bumper;
+import java.util.*;
 
-public abstract class AbstractBumper implements Bumper {
+public abstract class AbstractBumper extends Observable implements Bumper {
     private int score;
     private int initialScore;
     private int upgradeScore;
     private int hitTimesToUpgrade;
     private int timesHit;
     private boolean upgraded;
+    private Random random;
 
-    public AbstractBumper(int nHitTimesToUpgrade, int aInitialScore, int aUpgradeScore){
-        initialScore = aInitialScore;
-        upgradeScore = aUpgradeScore;
-        score = initialScore;
-        hitTimesToUpgrade = nHitTimesToUpgrade;
+    public AbstractBumper(int initialScore, int upgradeScore, int hitTimesToUpgrade){
+        this.initialScore = initialScore;
+        this.upgradeScore = upgradeScore;
+        this.hitTimesToUpgrade = hitTimesToUpgrade;
+        this.score = initialScore;
         upgraded = false;
+
+        random = new Random();
     }
 
     @Override
     public int remainingHitsToUpgrade() {
-        return hitTimesToUpgrade - timesHit;
+        int res = hitTimesToUpgrade - timesHit;
+        if(res < 0){res = 0;}
+        return res;
     }
 
     @Override
-    public boolean isUpgraded() {
-        return upgraded;
-    }
+    public boolean isUpgraded() { return upgraded; }
 
     @Override
     public void upgrade() {
-        this.setUpgrade(true);
-        this.setScore(upgradeScore);
-        double random = Math.random();
-        if(random < 0.1){
-            //TODO: trigger ExtraBallBonus
+        upgraded = true;
+        score = upgradeScore;
+        if(random.nextDouble() < 0.1){
+            setChanged();
+            notifyObservers();
         }
     }
 
     @Override
     public void downgrade() {
-        this.setUpgrade(false);
-        this.setScore(initialScore);
+        upgraded = false;
+        score = initialScore;
     }
 
     @Override
     public int hit() {
         timesHit += 1;
-        if(remainingHitsToUpgrade() == 0)
+        if(remainingHitsToUpgrade() == 0 && !this.upgraded)
             upgrade();
         return score;
     }
 
     @Override
-    public int getScore() {
-        return score;
-    }
+    public int getScore() { return score; }
 
     @Override
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    @Override
-    public void setUpgrade(boolean upgrade) {
-        this.upgraded = upgrade;
-    }
+    public void setSeed(long seed) { this.random.setSeed(seed); }
 }

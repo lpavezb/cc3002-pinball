@@ -4,13 +4,14 @@ import logic.gameelements.bumper.Bumper;
 import logic.gameelements.target.Target;
 
 import java.util.List;
+import java.util.Observer;
 
 /**
  * Interface that represents the basics of a table to be played on.
  *
  * @author Juan-Pablo Silva
  */
-public interface Table {
+public interface Table extends Observer {
     /**
      * Gets the table name.
      *

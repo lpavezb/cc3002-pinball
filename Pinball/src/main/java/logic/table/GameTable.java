@@ -5,6 +5,7 @@ import logic.gameelements.target.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 public class GameTable implements Table {
     private String name;
@@ -70,5 +71,10 @@ public class GameTable implements Table {
     public boolean isPlayableTable() {
         //TODO: ask ucursos
         return !bumpers.isEmpty() || !targets.isEmpty();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

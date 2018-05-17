@@ -15,18 +15,11 @@ public abstract class AbstractTarget implements Target{
     }
 
     @Override
-    public void reset() {
-        setActive(true);
-    }
+    public void reset() { setActive(true); }
 
     @Override
     public int getScore() {
         return score;
-    }
-
-    @Override
-    public void setScore(int score) {
-        this.score = score;
     }
 
     @Override

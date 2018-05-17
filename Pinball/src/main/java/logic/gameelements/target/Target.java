@@ -22,5 +22,8 @@ public interface Target extends Hittable {
      */
     void reset();
 
+    /**
+     * Sets the active state.
+     */
     void setActive(boolean activate);
 }

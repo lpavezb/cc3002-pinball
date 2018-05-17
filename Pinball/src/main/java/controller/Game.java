@@ -3,7 +3,7 @@ package controller;
 import logic.bonus.*;
 import logic.gameelements.bumper.Bumper;
 import logic.gameelements.target.Target;
-import logic.table.Table;
+import logic.table.*;
 
 import java.util.List;
 
@@ -17,8 +17,12 @@ public class Game {
     private Bonus extraBallBonus;
     private Bonus jackPotBonus;
 
+    private Table table;
+
     private int score;
     private int balls;
+
+    private boolean playableTable = false;
 
     public Game(){
         dropTargetBonus = new DropTargetBonus();
@@ -34,8 +38,7 @@ public class Game {
      * @return true if the current table is playable, false otherwise
      */
     public boolean isPlayableTable() {
-        //TODO
-        return false;
+        return playableTable;
     }
 
     /**
@@ -66,42 +69,13 @@ public class Game {
     }
 
     /**
-     * Creates a new table with the given parameters with no targets.
-     *
-     * @param name            the name of the table
-     * @param numberOfBumpers the number of bumpers in the table
-     * @param prob            the probability a {@link logic.gameelements.bumper.PopBumper}
-     * @return a new table determined by the parameters
-     */
-    public Table newPlayableTableWithNoTargets(String name, int numberOfBumpers, double prob) {
-        //TODO
-        return null;
-    }
-
-    /**
-     * Creates a new table with the given parameters.
-     *
-     * @param name                the name of the table
-     * @param numberOfBumpers     the number of bumpers in the table
-     * @param prob                the probability a {@link logic.gameelements.bumper.PopBumper}
-     * @param numberOfTargets     the number of {@link logic.gameelements.target.SpotTarget}
-     * @param numberOfDropTargets the number of {@link logic.gameelements.target.DropTarget}
-     * @return a new table determined by the parameters
-     */
-    public Table newFullPlayableTable(String name, int numberOfBumpers, double prob, int numberOfTargets, int numberOfDropTargets) {
-        //TODO
-        return null;
-    }
-
-    /**
      * Gets the list of bumpers in the current table.
      *
      * @return the list of bumpers
      * @see Bumper
      */
     public List<Bumper> getBumpers() {
-        //TODO
-        return null;
+        return table.getBumpers();
     }
 
     /**
@@ -111,8 +85,7 @@ public class Game {
      * @see Target
      */
     public List<Target> getTargets() {
-        //TODO
-        return null;
+        return table.getTargets();
     }
 
     /**
@@ -121,8 +94,7 @@ public class Game {
      * @return the name of the current table
      */
     public String getTableName() {
-        //TODO
-        return null;
+        return table.getTableName();
     }
 
     /**
@@ -143,12 +115,9 @@ public class Game {
 
     /**
      * Sets the points earned so far.
-     *
-     * @return the actual score
      */
-    public int setScore(int newScore) {
+    public void setScore(int newScore) {
         score = newScore;
-        return score;
     }
 
     /**
@@ -158,8 +127,7 @@ public class Game {
      * @see Table
      */
     public Table getCurrentTable() {
-        //TODO
-        return null;
+        return table;
     }
 
     /**
@@ -168,19 +136,17 @@ public class Game {
      * @param newTable the new table
      */
     public void setGameTable(Table newTable) {
-        //TODO
+        playableTable = true;
+        table = newTable;
     }
 
 
 
     /**
      * Increase the number of available balls and returns the new number.
-     *
-     * @return the new number of available balls
      */
-    public int addBall() {
+    public void addBall() {
         balls += 1;
-        return balls;
     }
 
     /**
@@ -199,8 +165,7 @@ public class Game {
      * @return true if the game is over, false otherwise
      */
     public boolean gameOver() {
-        //TODO
-        return false;
+        return balls == 0;
     }
 
 }

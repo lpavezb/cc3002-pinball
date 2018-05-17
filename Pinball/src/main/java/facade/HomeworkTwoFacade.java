@@ -164,6 +164,6 @@ public class HomeworkTwoFacade {
      * @return true if the game is over, false otherwise
      */
     public boolean gameOver() {
-        return false;
+        return game.gameOver();
     }
 }
