@@ -1,23 +1,20 @@
 package logic.gameelements.bumper;
-import java.util.*;
+import logic.gameelements.AbstractHittable;
 
-public abstract class AbstractBumper extends Observable implements Bumper {
-    private int score;
+
+public abstract class AbstractBumper extends AbstractHittable implements Bumper {
     private int initialScore;
     private int upgradeScore;
     private int hitTimesToUpgrade;
     private int timesHit;
     private boolean upgraded;
-    private Random random;
 
     public AbstractBumper(int initialScore, int upgradeScore, int hitTimesToUpgrade){
         this.initialScore = initialScore;
         this.upgradeScore = upgradeScore;
         this.hitTimesToUpgrade = hitTimesToUpgrade;
-        this.score = initialScore;
+        this.setScore(initialScore);
         upgraded = false;
-
-        random = new Random();
     }
 
     @Override
@@ -33,8 +30,8 @@ public abstract class AbstractBumper extends Observable implements Bumper {
     @Override
     public void upgrade() {
         upgraded = true;
-        score = upgradeScore;
-        if(random.nextDouble() < 0.1){
+        setScore(upgradeScore);
+        if(getRandom().nextDouble() < 0.1){
             setChanged();
             notifyObservers();
         }
@@ -43,7 +40,7 @@ public abstract class AbstractBumper extends Observable implements Bumper {
     @Override
     public void downgrade() {
         upgraded = false;
-        score = initialScore;
+        setScore(initialScore);
     }
 
     @Override
@@ -51,12 +48,6 @@ public abstract class AbstractBumper extends Observable implements Bumper {
         timesHit += 1;
         if(remainingHitsToUpgrade() == 0 && !this.upgraded)
             upgrade();
-        return score;
+        return getScore();
     }
-
-    @Override
-    public int getScore() { return score; }
-
-    @Override
-    public void setSeed(long seed) { this.random.setSeed(seed); }
 }

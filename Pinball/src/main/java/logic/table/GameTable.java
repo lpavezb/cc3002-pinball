@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-public class GameTable implements Table {
+public class GameTable extends Observable implements Table{
     private String name;
     private int nDropTargets;
     private List<Bumper> bumpers = new ArrayList<>();
@@ -75,6 +75,7 @@ public class GameTable implements Table {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        setChanged();
+        notifyObservers();
     }
 }

@@ -1,11 +1,12 @@
 package logic.gameelements.target;
 
-public abstract class AbstractTarget implements Target{
-    private int score;
+import logic.gameelements.AbstractHittable;
+
+public abstract class AbstractTarget extends AbstractHittable implements Target{
     private boolean activated;
 
-    public AbstractTarget(int anScore){
-        score = anScore;
+    public AbstractTarget(int score){
+        setScore(score);
         activated = true;
     }
 
@@ -18,12 +19,8 @@ public abstract class AbstractTarget implements Target{
     public void reset() { setActive(true); }
 
     @Override
-    public int getScore() {
-        return score;
-    }
-
-    @Override
     public void setActive(boolean activate) {
         activated = activate;
     }
+
 }

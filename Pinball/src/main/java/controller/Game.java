@@ -6,13 +6,15 @@ import logic.gameelements.target.Target;
 import logic.table.*;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Game logic controller class.
  *
  * @author Juan-Pablo Silva
  */
-public class Game {
+public class Game implements Observer {
     private Bonus dropTargetBonus;
     private Bonus extraBallBonus;
     private Bonus jackPotBonus;
@@ -168,4 +170,8 @@ public class Game {
         return balls == 0;
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }

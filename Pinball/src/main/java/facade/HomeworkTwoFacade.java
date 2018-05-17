@@ -36,7 +36,7 @@ public class HomeworkTwoFacade {
      * @return the DropTargetBonus instance
      */
     public Bonus getDropTargetBonus() {
-        return null;
+        return game.getDropTargetBonus();
     }
 
     /**
@@ -45,7 +45,7 @@ public class HomeworkTwoFacade {
      * @return the ExtraBallBonus instance
      */
     public Bonus getExtraBallBonus() {
-        return null;
+        return game.getExtraBallBonus();
     }
 
     /**
@@ -54,7 +54,7 @@ public class HomeworkTwoFacade {
      * @return the JackPotBonus instance
      */
     public Bonus getJackPotBonus() {
-        return null;
+        return game.getJackPotBonus();
     }
 
     /**
@@ -90,7 +90,7 @@ public class HomeworkTwoFacade {
      * @see Bumper
      */
     public List<Bumper> getBumpers() {
-        return null;
+        return game.getBumpers();
     }
 
     /**
@@ -100,7 +100,7 @@ public class HomeworkTwoFacade {
      * @see Target
      */
     public List<Target> getTargets() {
-        return null;
+        return game.getTargets();
     }
 
     /**
@@ -109,7 +109,7 @@ public class HomeworkTwoFacade {
      * @return the name of the current table
      */
     public String getTableName() {
-        return null;
+        return game.getTableName();
     }
 
     /**
@@ -118,7 +118,7 @@ public class HomeworkTwoFacade {
      * @return the number of available balls
      */
     public int getAvailableBalls() {
-        return 0;
+        return game.getAvailableBalls();
     }
 
     /**
@@ -127,7 +127,7 @@ public class HomeworkTwoFacade {
      * @return the earned score
      */
     public int getCurrentScore() {
-        return 0;
+        return game.getCurrentScore();
     }
 
     /**
@@ -137,7 +137,7 @@ public class HomeworkTwoFacade {
      * @see Table
      */
     public Table getCurrentTable() {
-        return null;
+        return game.getCurrentTable();
     }
 
     /**
@@ -145,9 +145,7 @@ public class HomeworkTwoFacade {
      *
      * @param newTable the new table
      */
-    public void setGameTable(Table newTable) {
-
-    }
+    public void setGameTable(Table newTable) { game.setGameTable(newTable); }
 
     /**
      * Reduces the number of available balls and returns the new number.
@@ -155,7 +153,7 @@ public class HomeworkTwoFacade {
      * @return the new number of available balls
      */
     public int dropBall() {
-        return 0;
+        return game.dropBall();
     }
 
     /**

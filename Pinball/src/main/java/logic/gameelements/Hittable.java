@@ -1,5 +1,7 @@
 package logic.gameelements;
 
+import java.util.Random;
+
 /**
  * Interface that represents a hittable object.
  *
@@ -24,4 +26,10 @@ public interface Hittable {
      * @return the current score of the object when hit
      */
     int getScore();
+
+    void setSeed(long seed);
+
+    Random getRandom();
+
+    void setScore(int score);
 }
