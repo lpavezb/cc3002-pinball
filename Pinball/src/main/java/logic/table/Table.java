@@ -9,6 +9,7 @@ import logic.gameelements.target.Target;
 import logic.visitor.DropTargetBonusVisitor;
 import logic.visitor.ExtraBallBonusVisitor;
 import logic.visitor.JackPotBonusVisitor;
+import logic.visitor.ScoreVisitor;
 
 import java.util.List;
 import java.util.Observer;
@@ -84,4 +85,8 @@ public interface Table extends Observer {
     void visitJackPotBonus(JackPotBonusVisitor jackPotBonusVisitor);
 
     void visitDropTargetBonus(DropTargetBonusVisitor dropTargetBonusVisitor);
+
+    void visitScore(ScoreVisitor scoreVisitor);
+
+    void addObserver(Observer o);
 }

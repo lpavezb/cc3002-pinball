@@ -9,5 +9,5 @@ public class JackPotBonusVisitor implements Visitor {
     public void accept(Table table) { table.visitJackPotBonus(this);  }
 
     @Override
-    public void triggerBonus(Game game) { game.triggerJackPotBonus(); }
+    public void trigger(Game game) { game.triggerJackPotBonus(); }
 }

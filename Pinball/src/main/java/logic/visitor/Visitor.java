@@ -7,5 +7,5 @@ public interface Visitor {
 
     void accept(Table table);
 
-    void triggerBonus(Game game);
+    void trigger(Game game);
 }

@@ -140,6 +140,7 @@ public class Game implements Observer {
      */
     public void setGameTable(Table table) {
         playableTable = true;
+        table.addObserver(this);
         this.table = table;
     }
 
@@ -169,6 +170,8 @@ public class Game implements Observer {
         return balls == 0;
     }
 
+    public void addScore(int score) { this.score += score; }
+
     public void triggerExtraBallBonus() { extraBallBonus.trigger(this); }
 
     public void triggerDropTargetBonus() { dropTargetBonus.trigger(this); }
@@ -176,5 +179,5 @@ public class Game implements Observer {
     public void triggerJackPotBonus() { jackPotBonus.trigger(this); }
 
     @Override
-    public void update(Observable o, Object arg) { ((Visitor)o).triggerBonus(this); }
+    public void update(Observable o, Object arg) { ((Visitor)arg).trigger(this); }
 }

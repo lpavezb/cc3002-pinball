@@ -12,7 +12,7 @@ public class DropTargetBonusVisitor implements Visitor {
     public void accept(Table table) { table.visitDropTargetBonus(this); }
 
     @Override
-    public void triggerBonus(Game game) {
+    public void trigger(Game game) {
         Table gameTable = game.getCurrentTable();
         List<DropTarget> dropTargets = gameTable.getDropTargets();
         for(DropTarget dropTarget : dropTargets)

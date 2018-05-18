@@ -152,7 +152,13 @@ public class GameTable extends Observable implements Table{
     }
 
     @Override
+    public void visitScore(ScoreVisitor scoreVisitor) {
+        setChanged();
+        notifyObservers(scoreVisitor);
+    }
+
+    @Override
     public void update(Observable o, Object arg) {
-        ((Visitor)o).accept(this);
+        ((Visitor)arg).accept(this);
     }
 }

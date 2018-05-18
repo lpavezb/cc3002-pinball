@@ -50,6 +50,7 @@ public class ConcreteBumper extends AbstractHittable implements Bumper {
         timesHit += 1;
         if(remainingHitsToUpgrade() == 0 && !this.upgraded)
             upgrade();
+        notifyScore();
         return getScore();
     }
 }
