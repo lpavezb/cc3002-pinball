@@ -11,10 +11,8 @@ public class DropTarget extends AbstractTarget {
         setActive(false);
         double random = Math.random();
         if(random < 0.3)
-            setChanged();
-            notifyObservers(new ExtraBallBonusVisitor());
-        setChanged();
-        notifyObservers(new DropTargetBonusVisitor());
+            notifyUp(new ExtraBallBonusVisitor());
+        notifyUp(new DropTargetBonusVisitor());
         return getScore();
     }
 }

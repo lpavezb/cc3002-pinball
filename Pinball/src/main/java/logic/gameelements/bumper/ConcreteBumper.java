@@ -1,6 +1,7 @@
 package logic.gameelements.bumper;
 import logic.gameelements.AbstractHittable;
 import logic.visitor.ExtraBallBonusVisitor;
+import logic.visitor.ScoreVisitor;
 
 
 public class ConcreteBumper extends AbstractHittable implements Bumper {
@@ -48,14 +49,13 @@ public class ConcreteBumper extends AbstractHittable implements Bumper {
             upgrade();
             tryTriggerBonus();
         }
-        notifyScore();
+        notifyUp(new ScoreVisitor(this));
         return getScore();
     }
 
-    public void tryTriggerBonus(){
+    private void tryTriggerBonus(){
         if(getRandom().nextDouble() < 0.1){
-            setChanged();
-            notifyObservers(new ExtraBallBonusVisitor());
+            notifyUp(new ExtraBallBonusVisitor());
         }
     }
 }

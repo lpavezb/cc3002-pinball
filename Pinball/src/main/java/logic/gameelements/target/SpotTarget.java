@@ -10,6 +10,7 @@ public class SpotTarget extends AbstractTarget {
     @Override
     public int hit() {
         setActive(false);
+        setChanged();
         notifyObservers(new JackPotBonusVisitor());
         return getScore();
     }
