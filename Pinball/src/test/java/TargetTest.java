@@ -31,6 +31,22 @@ public class TargetTest extends GameTest {
     }
 
     @Test
+    public void hitAllDropTargetTest(){
+        Target dropTarget0 = dropTargets.get(0);
+        Target dropTarget1 = dropTargets.get(1);
+        Target dropTarget2 = dropTargets.get(2);
+
+        dropTarget0.hit();
+        assertEquals(100, game.getCurrentScore());
+
+        dropTarget1.hit();
+        assertEquals(200, game.getCurrentScore());
+
+        dropTarget2.hit();
+        assertEquals(1000300, game.getCurrentScore());
+    }
+
+    @Test
     public void kickerBumperUpgradeTest(){
         Bumper kickerBumper = kickerBumpers.get(0);
         kickerBumper.hit();

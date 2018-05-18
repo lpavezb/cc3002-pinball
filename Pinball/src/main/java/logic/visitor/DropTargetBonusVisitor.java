@@ -16,7 +16,7 @@ public class DropTargetBonusVisitor implements Visitor {
         Table gameTable = game.getCurrentTable();
         List<DropTarget> dropTargets = gameTable.getDropTargets();
         for(DropTarget dropTarget : dropTargets)
-            if(!dropTarget.isActive())
+            if(dropTarget.isActive())
                 return;
         game.triggerDropTargetBonus();
     }
