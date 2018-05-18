@@ -32,10 +32,6 @@ public class ConcreteBumper extends AbstractHittable implements Bumper {
     public void upgrade() {
         upgraded = true;
         setScore(upgradeScore);
-        if(getRandom().nextDouble() < 0.1){
-            setChanged();
-            notifyObservers(new ExtraBallBonusVisitor());
-        }
     }
 
     @Override
@@ -48,9 +44,18 @@ public class ConcreteBumper extends AbstractHittable implements Bumper {
     @Override
     public int hit() {
         timesHit += 1;
-        if(remainingHitsToUpgrade() == 0 && !this.upgraded)
+        if(remainingHitsToUpgrade() == 0 && !this.upgraded){
             upgrade();
+            tryTriggerBonus();
+        }
         notifyScore();
         return getScore();
+    }
+
+    public void tryTriggerBonus(){
+        if(getRandom().nextDouble() < 0.1){
+            setChanged();
+            notifyObservers(new ExtraBallBonusVisitor());
+        }
     }
 }
