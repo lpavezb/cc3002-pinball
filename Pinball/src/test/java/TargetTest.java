@@ -24,11 +24,10 @@ public class TargetTest extends GameTest {
     }
 
     @Test
-    public void popBumperHitTest(){
-        Bumper popBumper = popBumpers.get(0);
-        popBumper.hit(); //+100
+    public void dropTargetHitTest(){
+        Target dropTarget = dropTargets.get(0);
+        dropTarget.hit(); //+100
         assertEquals(100, game.getCurrentScore());
-        assertEquals(5, game.getAvailableBalls());
     }
 
     @Test

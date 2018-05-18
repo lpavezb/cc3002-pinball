@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f6abb5d5-5630-4817-a5c8-ff753a3a53ee" name="Default" comment=":snake: fix observer :snake:">
-      <change afterPath="$PROJECT_DIR$/src/test/java/TargetTest.java" afterDir="false" />
+    <list default="true" id="f6abb5d5-5630-4817-a5c8-ff753a3a53ee" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/BumperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/BumperTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/GameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TargetTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TargetTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,8 +54,8 @@
       <file leaf-file-name="TargetTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/TargetTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+            <state relative-caret-position="273">
+              <caret line="29" column="22" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -107,11 +105,11 @@
         <option value="$PROJECT_DIR$/src/test/java/BumperTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/logic/bonus/DropTargetBonus.java" />
         <option value="$PROJECT_DIR$/src/main/java/logic/bonus/JackPotBonus.java" />
-        <option value="$PROJECT_DIR$/src/test/java/TargetTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/logic/gameelements/target/SpotTarget.java" />
         <option value="$PROJECT_DIR$/src/main/java/logic/gameelements/AbstractHittable.java" />
         <option value="$PROJECT_DIR$/src/main/java/logic/gameelements/bumper/ConcreteBumper.java" />
         <option value="$PROJECT_DIR$/src/main/java/logic/gameelements/target/DropTarget.java" />
+        <option value="$PROJECT_DIR$/src/test/java/TargetTest.java" />
       </list>
     </option>
   </component>
@@ -436,7 +434,7 @@
       <workItem from="1526424985131" duration="4763000" />
       <workItem from="1526509672809" duration="21923000" />
       <workItem from="1526603143542" duration="9536000" />
-      <workItem from="1526671450703" duration="10889000" />
+      <workItem from="1526671450703" duration="11148000" />
     </task>
     <task id="LOCAL-00001" summary=":dog: bumpers added :dog:">
       <created>1526264783243</created>
@@ -543,7 +541,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526681503551</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary=":cat: copy bumperTest and rename to TargetTest :cat:">
+      <created>1526683044807</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1526683044807</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -579,7 +584,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72893000" />
+    <option name="totallyTimeSpent" value="73152000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -591,7 +596,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1297" height="780" extended-state="6" />
+    <frame x="-1296" y="-11" width="1297" height="780" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -647,7 +652,8 @@
     <MESSAGE value=":cat: add bumper test :cat:" />
     <MESSAGE value=":snake: fix trigger extraBall bonus on hitting a Bumper :snake:" />
     <MESSAGE value=":snake: fix observer :snake:" />
-    <option name="LAST_COMMIT_MESSAGE" value=":snake: fix observer :snake:" />
+    <MESSAGE value=":cat: copy bumperTest and rename to TargetTest :cat:" />
+    <option name="LAST_COMMIT_MESSAGE" value=":cat: copy bumperTest and rename to TargetTest :cat:" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1169,6 +1175,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/logic/gameelements/target/DropTarget.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/logic/gameelements/target/AbstractTarget.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1181,20 +1197,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/logic/gameelements/target/DropTarget.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/TargetTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        <state relative-caret-position="273">
+          <caret line="29" column="22" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
