@@ -4,6 +4,7 @@ import logic.bonus.*;
 import logic.gameelements.bumper.Bumper;
 import logic.gameelements.target.Target;
 import logic.table.*;
+import logic.visitor.Visitor;
 
 import java.util.List;
 import java.util.Observable;
@@ -168,8 +169,12 @@ public class Game implements Observer {
         return balls == 0;
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
+    public void triggerExtraBallBonus() { extraBallBonus.trigger(this); }
 
-    }
+    public void triggerDropTargetBonus() { dropTargetBonus.trigger(this); }
+
+    public void triggerJackPotBonus() { jackPotBonus.trigger(this); }
+
+    @Override
+    public void update(Observable o, Object arg) { ((Visitor)o).triggerBonus(this); }
 }

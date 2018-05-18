@@ -1,5 +1,7 @@
 package logic.gameelements.target;
 
+import logic.visitor.JackPotBonusVisitor;
+
 public class SpotTarget extends AbstractTarget {
     public SpotTarget(){
         super(0);
@@ -8,7 +10,7 @@ public class SpotTarget extends AbstractTarget {
     @Override
     public int hit() {
         setActive(false);
-        //TODO: trigger JackPotBonus bonus
+        notifyObservers(new JackPotBonusVisitor());
         return getScore();
     }
 }

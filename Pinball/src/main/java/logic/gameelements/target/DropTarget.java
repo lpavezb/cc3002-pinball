@@ -1,5 +1,8 @@
 package logic.gameelements.target;
 
+import logic.visitor.DropTargetBonusVisitor;
+import logic.visitor.ExtraBallBonusVisitor;
+
 public class DropTarget extends AbstractTarget {
     public DropTarget(){ super(100); }
 
@@ -9,7 +12,9 @@ public class DropTarget extends AbstractTarget {
         double random = Math.random();
         if(random < 0.3)
             setChanged();
-        //TODO: if all DropTarget has been hit, call DropTargetBonus
+            notifyObservers(new ExtraBallBonusVisitor());
+        setChanged();
+        notifyObservers(new DropTargetBonusVisitor());
         return getScore();
     }
 }

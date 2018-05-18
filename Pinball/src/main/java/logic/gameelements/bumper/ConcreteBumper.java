@@ -40,6 +40,7 @@ public class ConcreteBumper extends AbstractHittable implements Bumper {
 
     @Override
     public void downgrade() {
+        timesHit = 0;
         upgraded = false;
         setScore(initialScore);
     }
