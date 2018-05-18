@@ -1,11 +1,7 @@
-package controller;
-
 import logic.gameelements.bumper.Bumper;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class BumperTest extends GameTest {
 
@@ -59,20 +55,20 @@ public class BumperTest extends GameTest {
     @Test
     public void upgradeBonusTest(){
         Bumper popBumper = popBumpers.get(0);
-        Bumper kickerBumper = kickerBumpers.get(0);
         assertFalse(popBumper.isUpgraded());
-        assertFalse(kickerBumper.isUpgraded());
         assertEquals(5, game.getAvailableBalls());
 
         popBumper.setSeed(456440); // < 0.1
-        kickerBumper.setSeed(456440); // < 0.1
         popBumper.upgrade();
         assertTrue(popBumper.isUpgraded());
-        assertEquals(6, game.getAvailableBalls());
+        assertEquals(5, game.getAvailableBalls());
 
-        kickerBumper.upgrade();
-        assertTrue(kickerBumper.isUpgraded());
-        assertEquals(7, game.getAvailableBalls());
+        popBumper.downgrade();
+        popBumper.hit();
+        popBumper.hit();
+        popBumper.hit();
+        assertTrue(popBumper.isUpgraded());
+        assertEquals(6, game.getAvailableBalls());
     }
 
     @Test

@@ -1,6 +1,8 @@
-package controller;
-
+import controller.Game;
 import logic.gameelements.bumper.*;
+import logic.gameelements.target.DropTarget;
+import logic.gameelements.target.SpotTarget;
+import logic.gameelements.target.Target;
 import logic.table.*;
 import org.junit.*;
 
@@ -15,6 +17,10 @@ public class GameTest {
     List<PopBumper> popBumpers;
     List<KickerBumper> kickerBumpers;
 
+    List<Target> targets;
+    List<SpotTarget> spotTargets;
+    List<DropTarget> dropTargets;
+
     @Before
     public void setUp(){
         game = new Game();
@@ -26,6 +32,10 @@ public class GameTest {
         bumpers = table.getBumpers();
         popBumpers = table.getPopBumpers();
         kickerBumpers = table.getKickerBumpers();
+
+        targets = table.getTargets();
+        spotTargets = table.getSpotTargets();
+        dropTargets = table.getDropTargets();
     }
 
 }
