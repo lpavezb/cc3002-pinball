@@ -21,6 +21,8 @@ public class GameTest {
     List<SpotTarget> spotTargets;
     List<DropTarget> dropTargets;
 
+    long magicalSeedForTesting = 456440; //random.nextDouble < 0.1
+
     @Before
     public void setUp(){
         game = new Game();

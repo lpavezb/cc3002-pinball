@@ -15,7 +15,7 @@ public class TargetTest extends GameTest {
     }
 
     @Test
-    public void SpotTargetHitTest(){
+    public void spotTargetHitTest(){
         Target spotTarget = spotTargets.get(0);
         assertTrue(spotTarget.isActive());
         spotTarget.hit();
@@ -36,74 +36,44 @@ public class TargetTest extends GameTest {
         Target dropTarget1 = dropTargets.get(1);
         Target dropTarget2 = dropTargets.get(2);
 
-        dropTarget0.hit();
+        for(Bumper bumper : bumpers)
+            assertFalse(bumper.isUpgraded());
+
+        dropTarget0.hit(); //+100
         assertEquals(100, game.getCurrentScore());
 
-        dropTarget1.hit();
+        dropTarget1.hit(); //+100
         assertEquals(200, game.getCurrentScore());
 
-        dropTarget2.hit();
+        dropTarget2.hit(); //+100 + 1000000 bonus
         assertEquals(1000300, game.getCurrentScore());
+
+        for(Bumper bumper : bumpers)
+            assertTrue(bumper.isUpgraded());
     }
 
     @Test
-    public void kickerBumperUpgradeTest(){
-        Bumper kickerBumper = kickerBumpers.get(0);
-        kickerBumper.hit();
-        kickerBumper.hit();
-        kickerBumper.hit();
-        kickerBumper.hit();
-        assertFalse(kickerBumper.isUpgraded());
+    public void dropTargetExtraBallBonusTest(){
+        Target dropTarget = dropTargets.get(0);
 
-        kickerBumper.hit();
-        assertTrue(kickerBumper.isUpgraded());
-    }
-
-    @Test
-    public void popBumperUpgradeTest(){
-        Bumper popBumper = popBumpers.get(0);
-        popBumper.hit();
-        popBumper.hit();
-        assertFalse(popBumper.isUpgraded());
-
-        popBumper.hit();
-        assertTrue(popBumper.isUpgraded());
-    }
-
-    @Test
-    public void upgradeBonusTest(){
-        Bumper popBumper = popBumpers.get(0);
-        assertFalse(popBumper.isUpgraded());
         assertEquals(5, game.getAvailableBalls());
 
-        popBumper.setSeed(456440); // < 0.1
-        popBumper.upgrade();
-        assertTrue(popBumper.isUpgraded());
-        assertEquals(5, game.getAvailableBalls());
-
-        popBumper.downgrade();
-        popBumper.hit();
-        popBumper.hit();
-        popBumper.hit();
-        assertTrue(popBumper.isUpgraded());
+        dropTarget.setSeed(magicalSeedForTesting);
+        dropTarget.hit(); //+100
+        assertEquals(100, game.getCurrentScore());
         assertEquals(6, game.getAvailableBalls());
+
     }
 
     @Test
-    public void downgradeTest(){
-        Bumper popBumper = popBumpers.get(0);
-        Bumper kickerBumper = kickerBumpers.get(0);
-        assertFalse(popBumper.isUpgraded());
-        assertFalse(kickerBumper.isUpgraded());
+    public void resetTargetTest(){
+        Target dropTarget = dropTargets.get(0);
+        assertTrue(dropTarget.isActive());
 
-        popBumper.upgrade();
-        kickerBumper.upgrade();
-        assertTrue(popBumper.isUpgraded());
-        assertTrue(kickerBumper.isUpgraded());
+        dropTarget.hit();
+        assertFalse(dropTarget.isActive());
 
-        popBumper.downgrade();
-        kickerBumper.downgrade();
-        assertFalse(popBumper.isUpgraded());
-        assertFalse(kickerBumper.isUpgraded());
+        dropTarget.reset();
+        assertTrue(dropTarget.isActive());
     }
 }

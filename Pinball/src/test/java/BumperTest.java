@@ -58,7 +58,7 @@ public class BumperTest extends GameTest {
         assertFalse(popBumper.isUpgraded());
         assertEquals(5, game.getAvailableBalls());
 
-        popBumper.setSeed(456440); // < 0.1
+        popBumper.setSeed(magicalSeedForTesting);
         popBumper.upgrade();
         assertTrue(popBumper.isUpgraded());
         assertEquals(5, game.getAvailableBalls());
