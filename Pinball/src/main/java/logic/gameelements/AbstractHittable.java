@@ -1,6 +1,5 @@
 package logic.gameelements;
 
-import logic.visitor.ScoreVisitor;
 import logic.visitor.Visitor;
 
 import java.util.Observable;
