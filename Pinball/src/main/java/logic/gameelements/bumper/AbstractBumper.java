@@ -1,17 +1,17 @@
 package logic.gameelements.bumper;
 import logic.gameelements.AbstractHittable;
-import logic.visitor.ExtraBallBonusVisitor;
-import logic.visitor.ScoreVisitor;
+import logic.inverseVisitor.ExtraBallBonusVisitor;
+import logic.inverseVisitor.ScoreVisitor;
 
 
-public class ConcreteBumper extends AbstractHittable implements Bumper {
+public abstract class AbstractBumper extends AbstractHittable implements Bumper {
     private int initialScore;
     private int upgradeScore;
     private int hitTimesToUpgrade;
     private int timesHit;
     private boolean upgraded;
 
-    public ConcreteBumper(int initialScore, int upgradeScore, int hitTimesToUpgrade){
+    public AbstractBumper(int initialScore, int upgradeScore, int hitTimesToUpgrade){
         this.initialScore = initialScore;
         this.upgradeScore = upgradeScore;
         this.hitTimesToUpgrade = hitTimesToUpgrade;

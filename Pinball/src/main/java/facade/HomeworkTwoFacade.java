@@ -4,6 +4,7 @@ import controller.Game;
 import logic.bonus.Bonus;
 import logic.gameelements.bumper.Bumper;
 import logic.gameelements.target.Target;
+import logic.table.GameTable;
 import logic.table.Table;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class HomeworkTwoFacade {
      * @return true if the current table is playable, false otherwise
      */
     public boolean isPlayableTable() {
-        return false;
+        return game.isPlayableTable();
     }
 
     /**
@@ -66,7 +67,7 @@ public class HomeworkTwoFacade {
      * @return a new table determined by the parameters
      */
     public Table newPlayableTableWithNoTargets(String name, int numberOfBumpers, double prob) {
-        return null;
+        return new GameTable(name, numberOfBumpers, prob, 0, 0);
     }
 
     /**
@@ -80,7 +81,7 @@ public class HomeworkTwoFacade {
      * @return a new table determined by the parameters
      */
     public Table newFullPlayableTable(String name, int numberOfBumpers, double prob, int numberOfTargets, int numberOfDropTargets) {
-        return null;
+        return new GameTable(name, numberOfBumpers, prob, numberOfTargets, numberOfDropTargets);
     }
 
     /**
@@ -90,7 +91,8 @@ public class HomeworkTwoFacade {
      * @see Bumper
      */
     public List<Bumper> getBumpers() {
-        return game.getBumpers();
+        Table gameTable = game.getCurrentTable();
+        return gameTable.getBumpers();
     }
 
     /**
@@ -100,7 +102,8 @@ public class HomeworkTwoFacade {
      * @see Target
      */
     public List<Target> getTargets() {
-        return game.getTargets();
+        Table gameTable = game.getCurrentTable();
+        return gameTable.getTargets();
     }
 
     /**

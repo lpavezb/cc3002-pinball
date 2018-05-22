@@ -1,9 +1,9 @@
-package logic.visitor;
+package logic.inverseVisitor;
 
 import controller.Game;
 import logic.table.Table;
 
-public class JackPotBonusVisitor implements Visitor {
+public class JackPotBonusVisitor implements IVisitor {
 
     @Override
     public void accept(Table table) { table.visitJackPotBonus(this);  }

@@ -1,4 +1,4 @@
-package logic.visitor;
+package logic.inverseVisitor;
 
 import controller.Game;
 import logic.gameelements.target.DropTarget;
@@ -6,7 +6,7 @@ import logic.table.Table;
 
 import java.util.List;
 
-public class DropTargetBonusVisitor implements Visitor {
+public class DropTargetBonusVisitor implements IVisitor {
 
     @Override
     public void accept(Table table) { table.visitDropTargetBonus(this); }

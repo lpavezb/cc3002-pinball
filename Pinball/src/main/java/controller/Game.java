@@ -1,14 +1,10 @@
 package controller;
 
 import logic.bonus.*;
-import logic.gameelements.bumper.Bumper;
-import logic.gameelements.target.Target;
 import logic.table.*;
-import logic.visitor.Visitor;
+import logic.inverseVisitor.IVisitor;
 
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * Game logic controller class.
@@ -25,23 +21,24 @@ public class Game implements Observer {
     private int score;
     private int balls;
 
-    private boolean playableTable = false;
-
     public Game(){
         dropTargetBonus = new DropTargetBonus();
         extraBallBonus = new ExtraBallBonus();
         jackPotBonus = new JackPotBonus();
 
+        table = new NullTable();
+
         score = 0;
         balls = 5;
     }
+
     /**
      * Gets whether the current table is playable or not.
      *
      * @return true if the current table is playable, false otherwise
      */
     public boolean isPlayableTable() {
-        return playableTable;
+        return table.isPlayableTable();
     }
 
     /**
@@ -72,42 +69,18 @@ public class Game implements Observer {
     }
 
     /**
-     * Gets the list of bumpers in the current table.
-     *
-     * @return the list of bumpers
-     * @see Bumper
-     */
-    public List<Bumper> getBumpers() {
-        return table.getBumpers();
-    }
-
-    /**
-     * Gets the list of targets in the current table.
-     *
-     * @return the list of targets
-     * @see Target
-     */
-    public List<Target> getTargets() {
-        return table.getTargets();
-    }
-
-    /**
      * Gets the name of the current table.
      *
      * @return the name of the current table
      */
-    public String getTableName() {
-        return table.getTableName();
-    }
+    public String getTableName() { return table.getTableName(); }
 
     /**
      * Gets the current number of available balls to play.
      *
      * @return the number of available balls
      */
-    public int getAvailableBalls() {
-        return balls;
-    }
+    public int getAvailableBalls() { return balls; }
 
     /**
      * Gets the points earned so far.
@@ -117,21 +90,12 @@ public class Game implements Observer {
     public int getCurrentScore() { return score; }
 
     /**
-     * Sets the points earned so far.
-     */
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    /**
      * Gets the current table.
      *
      * @return the current table
      * @see Table
      */
-    public Table getCurrentTable() {
-        return table;
-    }
+    public Table getCurrentTable() { return table; }
 
     /**
      * Sets a new table to play.
@@ -139,13 +103,12 @@ public class Game implements Observer {
      * @param table the new table
      */
     public void setGameTable(Table table) {
-        playableTable = true;
         table.addObserver(this);
         this.table = table;
     }
 
     /**
-     * Increase the number of available balls and returns the new number.
+     * Increase the number of available balls.
      */
     public void addBall() {
         balls += 1;
@@ -179,5 +142,5 @@ public class Game implements Observer {
     public void triggerJackPotBonus() { jackPotBonus.trigger(this); }
 
     @Override
-    public void update(Observable o, Object arg) { ((Visitor)arg).trigger(this); }
+    public void update(Observable o, Object arg) { ((IVisitor)arg).trigger(this); }
 }

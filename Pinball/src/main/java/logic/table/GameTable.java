@@ -1,19 +1,17 @@
 package logic.table;
 
+import logic.gameelements.Hittable;
 import logic.gameelements.bumper.*;
 import logic.gameelements.target.*;
+import logic.inverseVisitor.*;
 import logic.visitor.*;
 
 import java.util.*;
 
 public class GameTable extends Observable implements Table{
     private String name;
-    private List<Bumper> bumpers = new ArrayList<>();
-    private List<Target> targets = new ArrayList<>();
-    private List<DropTarget> dropTargets = new ArrayList<>();
-    private List<SpotTarget> spotTargets = new ArrayList<>();
-    private List<KickerBumper> kickerBumpers = new ArrayList<>();
-    private List<PopBumper> popBumpers = new ArrayList<>();
+    private List<Hittable> elements = new ArrayList<>();
+
     private Random random = new Random();
 
     public GameTable(String name, int numberOfBumpers, double prob, int numberOfTargets, int numberOfDropTargets){
@@ -21,28 +19,24 @@ public class GameTable extends Observable implements Table{
         for(int i = 0; i < numberOfBumpers; i++)
             if(random.nextDouble() < prob){
                 PopBumper newBumper = new PopBumper();
-                bumpers.add(newBumper);
-                popBumpers.add(newBumper);
+                elements.add(newBumper);
                 newBumper.addObserver(this);
             }
             else{
                 KickerBumper newBumper = new KickerBumper();
-                bumpers.add(newBumper);
-                kickerBumpers.add(newBumper);
+                elements.add(newBumper);
                 newBumper.addObserver(this);
             }
 
         for(int j = 0; j < numberOfTargets; j++){
             SpotTarget newTarget = new SpotTarget();
-            targets.add(newTarget);
-            spotTargets.add(newTarget);
+            elements.add(newTarget);
             newTarget.addObserver(this);
         }
 
         for(int k = 0; k < numberOfDropTargets; k++) {
             DropTarget newTarget = new DropTarget();
-            targets.add(newTarget);
-            dropTargets.add(newTarget);
+            elements.add(newTarget);
             newTarget.addObserver(this);
         }
     }
@@ -54,31 +48,27 @@ public class GameTable extends Observable implements Table{
             if(random.nextDouble() < prob){
                 PopBumper newBumper = new PopBumper();
                 newBumper.setSeed(seed);
-                bumpers.add(newBumper);
-                popBumpers.add(newBumper);
+                elements.add(newBumper);
                 newBumper.addObserver(this);
             }
             else{
                 KickerBumper newBumper = new KickerBumper();
                 newBumper.setSeed(seed);
-                bumpers.add(newBumper);
-                kickerBumpers.add(newBumper);
+                elements.add(newBumper);
                 newBumper.addObserver(this);
             }
 
         for(int j = 0; j < numberOfTargets; j++){
             SpotTarget newTarget = new SpotTarget();
             newTarget.setSeed(seed);
-            targets.add(newTarget);
-            spotTargets.add(newTarget);
+            elements.add(newTarget);
             newTarget.addObserver(this);
         }
 
         for(int k = 0; k < numberOfDropTargets; k++) {
             DropTarget newTarget = new DropTarget();
-            targets.add(newTarget);
             newTarget.setSeed(seed);
-            dropTargets.add(newTarget);
+            elements.add(newTarget);
             newTarget.addObserver(this);
         }
     }
@@ -87,50 +77,79 @@ public class GameTable extends Observable implements Table{
     public String getTableName() { return name; }
 
     @Override
-    public int getNumberOfDropTargets() { return dropTargets.size(); }
+    public int getNumberOfDropTargets() {
+        DropTargetVisitor v = new DropTargetVisitor();
+        this.accept(v);
+        return v.getNumberOfDropTargets(); }
 
     @Override
     public int getCurrentlyDroppedDropTargets() {
-        int res = 0;
-        for (Target target : dropTargets)
-            if (!target.isActive())
-                res += 1;
-        return res;
+        DropTargetVisitor v = new DropTargetVisitor();
+        this.accept(v);
+        return v.getCurrentlyDroppedDropTargets();
     }
 
     @Override
-    public List<Bumper> getBumpers() { return bumpers; }
+    public List<Bumper> getBumpers() {
+        BumperVisitor v = new BumperVisitor();
+        this.accept(v);
+        return v.getBumpers();
+    }
 
     @Override
-    public List<PopBumper> getPopBumpers() { return popBumpers; }
+    public List<PopBumper> getPopBumpers() {
+        PopBumperVisitor v = new PopBumperVisitor();
+        this.accept(v);
+        return v.getPopBumpers();
+    }
 
     @Override
-    public List<KickerBumper> getKickerBumpers() { return kickerBumpers; }
+    public List<KickerBumper> getKickerBumpers() {
+        KickerBumperVisitor v = new KickerBumperVisitor();
+        this.accept(v);
+        return v.getKickerBumpers();
+    }
 
     @Override
-    public List<Target> getTargets() { return targets; }
+    public List<Target> getTargets() {
+        TargetVisitor v = new TargetVisitor();
+        this.accept(v);
+        return v.getTargets();
+    }
 
     @Override
-    public List<SpotTarget> getSpotTargets() { return spotTargets; }
+    public List<SpotTarget> getSpotTargets() {
+        SpotTargetVisitor v = new SpotTargetVisitor();
+        this.accept(v);
+        return v.getSpotTargets();
+    }
 
     @Override
-    public List<DropTarget> getDropTargets() { return dropTargets; }
+    public List<DropTarget> getDropTargets() {
+        DropTargetVisitor v = new DropTargetVisitor();
+        this.accept(v);
+        return v.getDropTargets();
+    }
+
+    private void accept(Visitor v) { v.visitTable(this); }
 
     @Override
     public void resetDropTargets() {
-        for (Target target : dropTargets)
-            target.reset();
+        DropTargetVisitor v = new DropTargetVisitor();
+        this.accept(v);
+        v.resetDropTargets();
     }
 
     @Override
     public void upgradeAllBumpers() {
-        for(Bumper bumper : bumpers)
-            bumper.upgrade();
+        BumperVisitor v = new BumperVisitor();
+        this.accept(v);
+        v.upgradeAllBumpers();
     }
 
     @Override
     public boolean isPlayableTable() {
-        return !bumpers.isEmpty() || !targets.isEmpty();
+        return true;
     }
 
     @Override
@@ -158,7 +177,12 @@ public class GameTable extends Observable implements Table{
     }
 
     @Override
+    public List<Hittable> getElements() {
+        return elements;
+    }
+
+    @Override
     public void update(Observable o, Object arg) {
-        ((Visitor)arg).accept(this);
+        ((IVisitor)arg).accept(this);
     }
 }

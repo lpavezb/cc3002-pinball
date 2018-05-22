@@ -1,8 +1,6 @@
 import controller.Game;
 import logic.gameelements.bumper.*;
-import logic.gameelements.target.DropTarget;
-import logic.gameelements.target.SpotTarget;
-import logic.gameelements.target.Target;
+import logic.gameelements.target.*;
 import logic.table.*;
 import org.junit.*;
 
@@ -12,7 +10,6 @@ import static org.junit.Assert.*;
 
 public class GameTest {
     Game game;
-    Table table;
     List<Bumper> bumpers;
     List<PopBumper> popBumpers;
     List<KickerBumper> kickerBumpers;
@@ -27,7 +24,7 @@ public class GameTest {
     public void setUp(){
         game = new Game();
         assertFalse(game.isPlayableTable());
-        table = new GameTable("pinball", 10, 0.5, 3, 3, 0);
+        Table table = new GameTable("pinball", 10, 0.5, 3, 3, 0);
         game.setGameTable(table);
         assertTrue(game.isPlayableTable());
 
@@ -40,4 +37,21 @@ public class GameTest {
         dropTargets = table.getDropTargets();
     }
 
+    @Test
+    public void gameOverTest(){
+        game.dropBall();
+        game.dropBall();
+        game.dropBall();
+        game.dropBall();
+
+        assertFalse(game.gameOver());
+
+        game.dropBall();
+        assertTrue(game.gameOver());
+    }
+
+    @Test
+    public void getNameTest(){
+        assertEquals("pinball", game.getTableName());
+    }
 }

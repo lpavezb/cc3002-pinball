@@ -1,8 +1,9 @@
 package logic.gameelements.target;
 
-import logic.visitor.DropTargetBonusVisitor;
-import logic.visitor.ExtraBallBonusVisitor;
-import logic.visitor.ScoreVisitor;
+import logic.inverseVisitor.DropTargetBonusVisitor;
+import logic.inverseVisitor.ExtraBallBonusVisitor;
+import logic.inverseVisitor.ScoreVisitor;
+import logic.visitor.Visitor;
 
 public class DropTarget extends AbstractTarget {
     public DropTarget(){ super(100); }
@@ -16,4 +17,7 @@ public class DropTarget extends AbstractTarget {
         notifyUp(new DropTargetBonusVisitor());
         return getScore();
     }
+
+    @Override
+    public void accept(Visitor visitor) { visitor.visitDropTarget(this); }
 }

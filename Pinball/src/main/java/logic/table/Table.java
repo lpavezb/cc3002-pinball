@@ -1,18 +1,11 @@
 package logic.table;
 
-import logic.gameelements.bumper.Bumper;
-import logic.gameelements.bumper.KickerBumper;
-import logic.gameelements.bumper.PopBumper;
-import logic.gameelements.target.DropTarget;
-import logic.gameelements.target.SpotTarget;
-import logic.gameelements.target.Target;
-import logic.visitor.DropTargetBonusVisitor;
-import logic.visitor.ExtraBallBonusVisitor;
-import logic.visitor.JackPotBonusVisitor;
-import logic.visitor.ScoreVisitor;
+import logic.gameelements.Hittable;
+import logic.gameelements.bumper.*;
+import logic.gameelements.target.*;
+import logic.inverseVisitor.*;
 
-import java.util.List;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * Interface that represents the basics of a table to be played on.
@@ -28,14 +21,14 @@ public interface Table extends Observer {
     String getTableName();
 
     /**
-     * Gets the number of {@link logic.gameelements.target.DropTarget} in the table.
+     * Gets the number of {@link DropTarget} in the table.
      *
      * @return the number of DropTargets in the table
      */
     int getNumberOfDropTargets();
 
     /**
-     * Gets the number of {@link logic.gameelements.target.DropTarget} that are currently dropped or inactive.
+     * Gets the number of {@link DropTarget} that are currently dropped or inactive.
      *
      * @return the number of DropTargets that are currently inactive
      */
@@ -64,7 +57,7 @@ public interface Table extends Observer {
     List<DropTarget> getDropTargets();
 
     /**
-     * Resets all {@link logic.gameelements.target.DropTarget} in the table. Make them active.
+     * Resets all {@link DropTarget} in the table. Make them active.
      */
     void resetDropTargets();
 
@@ -89,4 +82,6 @@ public interface Table extends Observer {
     void visitScore(ScoreVisitor scoreVisitor);
 
     void addObserver(Observer o);
+
+    List<Hittable> getElements();
 }

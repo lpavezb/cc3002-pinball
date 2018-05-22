@@ -1,6 +1,7 @@
 package logic.gameelements.target;
 
-import logic.visitor.JackPotBonusVisitor;
+import logic.inverseVisitor.JackPotBonusVisitor;
+import logic.visitor.Visitor;
 
 public class SpotTarget extends AbstractTarget {
     public SpotTarget(){
@@ -14,4 +15,7 @@ public class SpotTarget extends AbstractTarget {
         notifyObservers(new JackPotBonusVisitor());
         return getScore();
     }
+
+    @Override
+    public void accept(Visitor visitor) { visitor.visitSpotTarget(this); }
 }

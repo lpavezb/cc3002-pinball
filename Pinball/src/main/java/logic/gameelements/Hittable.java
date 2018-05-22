@@ -1,5 +1,7 @@
 package logic.gameelements;
 
+import logic.visitor.Visitor;
+
 import java.util.Random;
 
 /**
@@ -32,4 +34,6 @@ public interface Hittable {
     Random getRandom();
 
     void setScore(int score);
+
+    void accept(Visitor visitor);
 }

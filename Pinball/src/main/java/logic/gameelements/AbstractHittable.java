@@ -1,6 +1,6 @@
 package logic.gameelements;
 
-import logic.visitor.Visitor;
+import logic.inverseVisitor.IVisitor;
 
 import java.util.Observable;
 import java.util.Random;
@@ -21,7 +21,7 @@ public abstract class AbstractHittable extends Observable implements Hittable{
     @Override
     public void setScore(int score){ this.score = score; }
 
-    public void notifyUp(Visitor visitor){
+    public void notifyUp(IVisitor visitor){
         setChanged();
         notifyObservers(visitor);
     }
