@@ -10,12 +10,15 @@ public class DropTarget extends AbstractTarget {
 
     @Override
     public int hit() {
-        setActive(false);
-        notifyUp(new ScoreVisitor(this));
-        if(getRandom().nextDouble() < 0.3)
-            notifyUp(new ExtraBallBonusVisitor());
-        notifyUp(new DropTargetBonusVisitor());
-        return getScore();
+        if(this.isActive()) {
+            setActive(false);
+            notifyUp(new ScoreVisitor(this));
+            if (getRandom().nextDouble() < 0.3)
+                notifyUp(new ExtraBallBonusVisitor());
+            notifyUp(new DropTargetBonusVisitor());
+            return getScore();
+        }
+        return 0;
     }
 
     @Override

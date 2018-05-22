@@ -1,6 +1,7 @@
 
 import logic.gameelements.bumper.Bumper;
 import logic.gameelements.target.DropTarget;
+import logic.gameelements.target.SpotTarget;
 import logic.gameelements.target.Target;
 import org.junit.Test;
 
@@ -46,11 +47,11 @@ public class TargetTest extends GameTest {
         dropTarget1.hit(); //+100
         assertEquals(200, game.getCurrentScore());
 
-        dropTarget1.hit(); //+100, hit again same target
-        assertEquals(300, game.getCurrentScore());
+        dropTarget1.hit(); // hit again same target, + 0
+        assertEquals(200, game.getCurrentScore());
 
         dropTarget2.hit(); //+100 + 1000000 bonus
-        assertEquals(1000400, game.getCurrentScore());
+        assertEquals(1000300, game.getCurrentScore());
 
         for(Bumper bumper : bumpers)
             assertTrue(bumper.isUpgraded());
@@ -104,5 +105,28 @@ public class TargetTest extends GameTest {
 
 
         assertEquals(2, table.getCurrentlyDroppedDropTargets());
+    }
+
+    @Test
+    public void hitNotActiveTargetsTest(){
+        DropTarget dropTarget = dropTargets.get(0);
+        SpotTarget spotTarget = spotTargets.get(0);
+
+        assertTrue(dropTarget.isActive());
+        dropTarget.hit();
+        assertEquals(100, game.getCurrentScore());
+
+        assertFalse(dropTarget.isActive());
+        dropTarget.hit();
+        assertEquals(100, game.getCurrentScore());
+
+        assertTrue(spotTarget.isActive());
+        spotTarget.hit();
+        assertEquals(100100, game.getCurrentScore());
+
+        assertFalse(spotTarget.isActive());
+        spotTarget.hit();
+        assertEquals(100100, game.getCurrentScore());
+
     }
 }

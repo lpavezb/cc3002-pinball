@@ -10,10 +10,13 @@ public class SpotTarget extends AbstractTarget {
 
     @Override
     public int hit() {
-        setActive(false);
-        setChanged();
-        notifyObservers(new JackPotBonusVisitor());
-        return getScore();
+        if(this.isActive()) {
+            setActive(false);
+            setChanged();
+            notifyObservers(new JackPotBonusVisitor());
+            return getScore();
+        }
+        return 0;
     }
 
     @Override
