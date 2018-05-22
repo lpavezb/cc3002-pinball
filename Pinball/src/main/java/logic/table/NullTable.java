@@ -1,22 +1,13 @@
 package logic.table;
 
 import logic.gameelements.Hittable;
-import logic.gameelements.bumper.Bumper;
-import logic.gameelements.bumper.KickerBumper;
-import logic.gameelements.bumper.PopBumper;
-import logic.gameelements.target.DropTarget;
-import logic.gameelements.target.Target;
-import logic.inverseVisitor.DropTargetBonusVisitor;
-import logic.inverseVisitor.ExtraBallBonusVisitor;
-import logic.inverseVisitor.JackPotBonusVisitor;
-import logic.inverseVisitor.ScoreVisitor;
+import logic.gameelements.bumper.*;
+import logic.gameelements.target.*;
+import logic.inverseVisitor.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
-public class NullTable implements Table {
+public class NullTable extends Observable implements Table {
     @Override
     public String getTableName() { return "There is no table"; }
 
@@ -63,9 +54,6 @@ public class NullTable implements Table {
 
     @Override
     public void visitScore(ScoreVisitor scoreVisitor) { }
-
-    @Override
-    public void addObserver(Observer o) { }
 
     @Override
     public List<Hittable> getElements() {

@@ -1,5 +1,6 @@
 
 import logic.gameelements.bumper.Bumper;
+import logic.gameelements.target.DropTarget;
 import logic.gameelements.target.Target;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ public class TargetTest extends GameTest {
     public void creationTest(){
         assertEquals(6, targets.size());
         assertEquals(3, spotTargets.size());
-        assertEquals(3, dropTargets.size());
+        assertEquals(3, table.getNumberOfDropTargets());
     }
 
     @Test
@@ -45,8 +46,11 @@ public class TargetTest extends GameTest {
         dropTarget1.hit(); //+100
         assertEquals(200, game.getCurrentScore());
 
+        dropTarget1.hit(); //+100, hit again same target
+        assertEquals(300, game.getCurrentScore());
+
         dropTarget2.hit(); //+100 + 1000000 bonus
-        assertEquals(1000300, game.getCurrentScore());
+        assertEquals(1000400, game.getCurrentScore());
 
         for(Bumper bumper : bumpers)
             assertTrue(bumper.isUpgraded());
@@ -75,5 +79,30 @@ public class TargetTest extends GameTest {
 
         dropTarget.reset();
         assertTrue(dropTarget.isActive());
+    }
+
+    @Test
+    public void resetAllTargetsTest(){
+        for(DropTarget dropTarget : dropTargets) {
+            dropTarget.hit();
+            assertFalse(dropTarget.isActive());
+        }
+
+        table.resetDropTargets();
+
+        for(DropTarget dropTarget : dropTargets)
+            assertTrue(dropTarget.isActive());
+    }
+
+    @Test
+    public void getNumberOfDroppedDropTargetsTest(){
+        DropTarget dropTarget0 = dropTargets.get(0);
+        DropTarget dropTarget1 = dropTargets.get(1);
+
+        dropTarget0.hit();
+        dropTarget1.hit();
+
+
+        assertEquals(2, table.getCurrentlyDroppedDropTargets());
     }
 }

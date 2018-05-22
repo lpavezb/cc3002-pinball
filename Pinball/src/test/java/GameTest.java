@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 
 public class GameTest {
     Game game;
+    Table table;
     List<Bumper> bumpers;
     List<PopBumper> popBumpers;
     List<KickerBumper> kickerBumpers;
@@ -24,7 +25,8 @@ public class GameTest {
     public void setUp(){
         game = new Game();
         assertFalse(game.isPlayableTable());
-        Table table = new GameTable("pinball", 10, 0.5, 3, 3, 0);
+        table = new GameTable("pinball", 10, 0.5, 3, 3, 0);
+        Table table1 = new GameTable("randomPinball", 10, 0.5, 3, 3);
         game.setGameTable(table);
         assertTrue(game.isPlayableTable());
 
