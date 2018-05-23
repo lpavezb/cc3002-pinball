@@ -1,18 +1,17 @@
 # Pinball - Tarea 2 CC3002
 
-One Paragraph of project description goes here
+Implementation of a Pinball game given a base code.
+
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running 
+on your local machine for development and testing purposes.
+
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+- Java 8 - [*How to install the JDK on Ubuntu Linux*](https://stackoverflow.com/questions/14788345/how-to-install-the-jdk-on-ubuntu-linux)
 
 ### Installing
 
@@ -52,28 +51,13 @@ Explain what these tests test and why
 Give an example
 ```
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
 
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Authors
 
-* **Juan-Pablo Silva** - *[Pinball Base Code](https://github.com/lpavezb/cc3002/tree/master/PinballBaseCode)* - [juanpablos](https://github.com/juanpablos)
-* **Lukas Pavez** - *implementation of the initial interfaces* - [lpavezb](https://github.com/lpavezb)
+* **Juan-Pablo Silva** - [*Pinball Base Code*](https://github.com/lpavezb/cc3002/tree/master/PinballBaseCode) - [juanpablos](https://github.com/juanpablos)
+* **Lukas Pavez** - *homework implementation* - [lpavezb](https://github.com/lpavezb)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc

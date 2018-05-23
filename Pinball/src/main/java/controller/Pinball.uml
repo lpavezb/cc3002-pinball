@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>controller.Game</OriginalElement>
+  <nodes>
+    <node x="490.5" y="0.0">java.util.Observer</node>
+    <node x="1028.254098360656" y="1405.7786885245903">logic.visitor.PopBumperVisitor</node>
+    <node x="455.0" y="630.0">logic.table.NullTable</node>
+    <node x="682.5" y="117.0">controller.Game</node>
+    <node x="1091.254098360656" y="1694.7786885245903">logic.inverseVisitor.ScoreVisitor</node>
+    <node x="1497.5" y="651.0">logic.gameelements.target.SpotTarget</node>
+    <node x="1127.0" y="426.0">logic.gameelements.bumper.AbstractBumper</node>
+    <node x="1720.5" y="651.0">logic.gameelements.target.DropTarget</node>
+    <node x="672.2540983606559" y="1369.7786885245903">logic.visitor.DropTargetVisitor</node>
+    <node x="305.2540983606559" y="1405.7786885245903">logic.visitor.KickerBumperVisitor</node>
+    <node x="981.2540983606561" y="1565.7786885245903">logic.inverseVisitor.IVisitor</node>
+    <node x="870.254098360656" y="1694.7786885245903">logic.inverseVisitor.ExtraBallBonusVisitor</node>
+    <node x="-49.74590163934408" y="1381.7786885245903">logic.visitor.BumperVisitor</node>
+    <node x="1020.5" y="237.0">logic.gameelements.bumper.Bumper</node>
+    <node x="1274.5" y="663.0">logic.gameelements.bumper.KickerBumper</node>
+    <node x="1382.893442622951" y="926.2131147540986">logic.bonus.AbstractBonus</node>
+    <node x="1382.893442622951" y="797.2131147540986">logic.bonus.Bonus</node>
+    <node x="0.0" y="618.0">logic.table.GameTable</node>
+    <node x="1605.393442622951" y="1055.2131147540986">logic.bonus.DropTargetBonus</node>
+    <node x="1376.5" y="225.0">logic.gameelements.AbstractHittable</node>
+    <node x="1378.0" y="0.0">logic.gameelements.Hittable</node>
+    <node x="1051.5" y="663.0">logic.gameelements.bumper.PopBumper</node>
+    <node x="1692.254098360656" y="1393.7786885245903">logic.visitor.TargetVisitor</node>
+    <node x="1594.5" y="462.0">logic.gameelements.target.AbstractTarget</node>
+    <node x="1386.393442622951" y="1055.2131147540986">logic.bonus.JackPotBonus</node>
+    <node x="1310.254098360656" y="1694.7786885245903">logic.inverseVisitor.JackPotBonusVisitor</node>
+    <node x="1365.254098360656" y="1405.7786885245903">logic.visitor.SpotTargetVisitor</node>
+    <node x="1167.393442622951" y="1055.2131147540986">logic.bonus.ExtraBallBonus</node>
+    <node x="227.50000000000006" y="105.0">logic.table.Table</node>
+    <node x="846.0040983606558" y="1158.7786885245903">logic.visitor.Visitor</node>
+    <node x="632.254098360656" y="1694.7786885245903">logic.inverseVisitor.DropTargetBonusVisitor</node>
+    <node x="1690.25" y="249.0">logic.gameelements.target.Target</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="logic.visitor.DropTargetVisitor" target="logic.visitor.Visitor">
+      <point x="0.0" y="-75.5" />
+      <point x="840.2540983606559" y="1349.7786885245903" />
+      <point x="985.5874316939892" y="1349.7786885245903" />
+      <point x="-27.91666666666663" y="75.5" />
+    </edge>
+    <edge source="logic.gameelements.bumper.PopBumper" target="logic.gameelements.bumper.AbstractBumper">
+      <point x="0.0" y="-27.5" />
+      <point x="1153.0" y="626.0" />
+      <point x="1195.75" y="626.0" />
+      <point x="-68.75" y="87.5" />
+    </edge>
+    <edge source="logic.table.Table" target="java.util.Observer">
+      <point x="-5.6843418860808015E-14" y="-231.5" />
+      <point x="445.0" y="80.0" />
+      <point x="563.75" y="80.0" />
+      <point x="-73.25" y="27.5" />
+    </edge>
+    <edge source="logic.gameelements.AbstractHittable" target="logic.gameelements.Hittable">
+      <point x="0.0" y="-75.5" />
+      <point x="0.0" y="87.5" />
+    </edge>
+    <edge source="logic.visitor.TargetVisitor" target="logic.visitor.Visitor">
+      <point x="0.0" y="-51.5" />
+      <point x="1842.754098360656" y="1329.7786885245903" />
+      <point x="1153.0874316939894" y="1329.7786885245903" />
+      <point x="139.58333333333348" y="75.5" />
+    </edge>
+    <edge source="logic.bonus.AbstractBonus" target="logic.bonus.Bonus">
+      <point x="0.0" y="-39.5" />
+      <point x="0.0" y="39.5" />
+    </edge>
+    <edge source="logic.bonus.JackPotBonus" target="logic.bonus.AbstractBonus">
+      <point x="0.0" y="-27.5" />
+      <point x="0.0" y="39.5" />
+    </edge>
+    <edge source="logic.table.NullTable" target="logic.table.Table">
+      <point x="0.0" y="-231.5" />
+      <point x="672.5" y="593.0" />
+      <point x="553.75" y="593.0" />
+      <point x="108.74999999999994" y="231.5" />
+    </edge>
+    <edge source="logic.inverseVisitor.ExtraBallBonusVisitor" target="logic.inverseVisitor.IVisitor">
+      <point x="0.0" y="-39.5" />
+      <point x="970.754098360656" y="1674.7786885245903" />
+      <point x="1055.8790983606561" y="1674.7786885245903" />
+      <point x="-24.875" y="39.5" />
+    </edge>
+    <edge source="logic.gameelements.bumper.Bumper" target="logic.gameelements.Hittable">
+      <point x="0.0" y="-63.5" />
+      <point x="1158.0" y="200.0" />
+      <point x="1414.5" y="200.0" />
+      <point x="-73.0" y="87.5" />
+    </edge>
+    <edge source="logic.inverseVisitor.JackPotBonusVisitor" target="logic.inverseVisitor.IVisitor">
+      <point x="0.0" y="-39.5" />
+      <point x="1409.754098360656" y="1664.7786885245903" />
+      <point x="1155.3790983606561" y="1664.7786885245903" />
+      <point x="74.625" y="39.5" />
+    </edge>
+    <edge source="logic.inverseVisitor.ScoreVisitor" target="logic.inverseVisitor.IVisitor">
+      <point x="1.1368683772161603E-13" y="-39.5" />
+      <point x="1190.7540983606561" y="1674.7786885245903" />
+      <point x="1105.6290983606561" y="1674.7786885245903" />
+      <point x="24.875" y="39.5" />
+    </edge>
+    <edge source="logic.bonus.DropTargetBonus" target="logic.bonus.AbstractBonus">
+      <point x="0.0" y="-27.5" />
+      <point x="1704.893442622951" y="1030.2131147540986" />
+      <point x="1554.5601092896177" y="1030.2131147540986" />
+      <point x="68.66666666666669" y="39.5" />
+    </edge>
+    <edge source="logic.visitor.KickerBumperVisitor" target="logic.visitor.Visitor">
+      <point x="0.0" y="-39.5" />
+      <point x="478.7540983606559" y="1339.7786885245903" />
+      <point x="929.7540983606558" y="1339.7786885245903" />
+      <point x="-83.75" y="75.5" />
+    </edge>
+    <edge source="logic.gameelements.target.AbstractTarget" target="logic.gameelements.target.Target">
+      <point x="58.0" y="-51.5" />
+      <point x="1768.5" y="401.0" />
+      <point x="1806.25" y="401.0" />
+      <point x="0.0" y="51.5" />
+    </edge>
+    <edge source="logic.gameelements.bumper.KickerBumper" target="logic.gameelements.bumper.AbstractBumper">
+      <point x="0.0" y="-27.5" />
+      <point x="1376.0" y="626.0" />
+      <point x="1333.25" y="626.0" />
+      <point x="68.75" y="87.5" />
+    </edge>
+    <edge source="logic.visitor.PopBumperVisitor" target="logic.visitor.Visitor">
+      <point x="0.0" y="-39.5" />
+      <point x="1186.754098360656" y="1349.7786885245903" />
+      <point x="1041.4207650273224" y="1349.7786885245903" />
+      <point x="27.916666666666742" y="75.5" />
+    </edge>
+    <edge source="logic.gameelements.bumper.AbstractBumper" target="logic.gameelements.bumper.Bumper">
+      <point x="-68.75" y="-87.5" />
+      <point x="1195.75" y="401.0" />
+      <point x="1158.0" y="401.0" />
+      <point x="0.0" y="63.5" />
+    </edge>
+    <edge source="logic.bonus.ExtraBallBonus" target="logic.bonus.AbstractBonus">
+      <point x="0.0" y="-27.5" />
+      <point x="1266.893442622951" y="1030.2131147540986" />
+      <point x="1417.2267759562842" y="1030.2131147540986" />
+      <point x="-68.66666666666669" y="39.5" />
+    </edge>
+    <edge source="logic.inverseVisitor.DropTargetBonusVisitor" target="logic.inverseVisitor.IVisitor">
+      <point x="0.0" y="-39.5" />
+      <point x="741.254098360656" y="1664.7786885245903" />
+      <point x="1006.1290983606561" y="1664.7786885245903" />
+      <point x="-74.625" y="39.5" />
+    </edge>
+    <edge source="controller.Game" target="java.util.Observer">
+      <point x="0.0" y="-219.5" />
+      <point x="829.0" y="80.0" />
+      <point x="710.25" y="80.0" />
+      <point x="73.25" y="27.5" />
+    </edge>
+    <edge source="logic.visitor.BumperVisitor" target="logic.visitor.Visitor">
+      <point x="0.0" y="-63.5" />
+      <point x="117.75409836065592" y="1329.7786885245903" />
+      <point x="873.9207650273224" y="1329.7786885245903" />
+      <point x="-139.58333333333337" y="75.5" />
+    </edge>
+    <edge source="logic.gameelements.bumper.AbstractBumper" target="logic.gameelements.AbstractHittable">
+      <point x="68.75" y="-87.5" />
+      <point x="1333.25" y="401.0" />
+      <point x="1432.0" y="401.0" />
+      <point x="-55.5" y="75.5" />
+    </edge>
+    <edge source="logic.gameelements.target.DropTarget" target="logic.gameelements.target.AbstractTarget">
+      <point x="0.0" y="-39.5" />
+      <point x="1822.0" y="626.0" />
+      <point x="1768.5" y="626.0" />
+      <point x="58.0" y="51.5" />
+    </edge>
+    <edge source="logic.gameelements.target.AbstractTarget" target="logic.gameelements.AbstractHittable">
+      <point x="-58.0" y="-51.5" />
+      <point x="1652.5" y="401.0" />
+      <point x="1543.0" y="401.0" />
+      <point x="55.5" y="75.5" />
+    </edge>
+    <edge source="logic.visitor.SpotTargetVisitor" target="logic.visitor.Visitor">
+      <point x="0.0" y="-39.5" />
+      <point x="1518.754098360656" y="1339.7786885245903" />
+      <point x="1097.254098360656" y="1339.7786885245903" />
+      <point x="83.75" y="75.5" />
+    </edge>
+    <edge source="logic.gameelements.target.Target" target="logic.gameelements.Hittable">
+      <point x="0.0" y="-51.5" />
+      <point x="1806.25" y="200.0" />
+      <point x="1560.5" y="200.0" />
+      <point x="73.0" y="87.5" />
+    </edge>
+    <edge source="logic.table.GameTable" target="logic.table.Table">
+      <point x="0.0" y="-243.5" />
+      <point x="217.5" y="593.0" />
+      <point x="336.25000000000006" y="593.0" />
+      <point x="-108.75" y="231.5" />
+    </edge>
+    <edge source="logic.gameelements.target.SpotTarget" target="logic.gameelements.target.AbstractTarget">
+      <point x="0.0" y="-39.5" />
+      <point x="1599.0" y="626.0" />
+      <point x="1652.5" y="626.0" />
+      <point x="-58.0" y="51.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.841736694677871" x="1090.9417637271215" y="1134.3460898502497" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
