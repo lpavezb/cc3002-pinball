@@ -2,7 +2,7 @@ package logic.gameelements;
 
 import logic.visitor.Visitor;
 
-import java.util.Random;
+import java.util.*;
 
 /**
  * Interface that represents a hittable object.
@@ -36,4 +36,6 @@ public interface Hittable {
     void setScore(int score);
 
     void accept(Visitor visitor);
+
+    void addObserver(Observer o);
 }

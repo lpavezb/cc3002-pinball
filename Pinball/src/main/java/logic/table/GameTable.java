@@ -17,59 +17,37 @@ public class GameTable extends Observable implements Table{
     public GameTable(String name, int numberOfBumpers, double prob, int numberOfTargets, int numberOfDropTargets){
         this.name = name;
         for(int i = 0; i < numberOfBumpers; i++)
-            if(random.nextDouble() < prob){
-                PopBumper newBumper = new PopBumper();
-                elements.add(newBumper);
-                newBumper.addObserver(this);
-            }
-            else{
-                KickerBumper newBumper = new KickerBumper();
-                elements.add(newBumper);
-                newBumper.addObserver(this);
-            }
+            if(random.nextDouble() < prob)
+                elements.add(new PopBumper());
+            else
+                elements.add(new KickerBumper());
+        for(int j = 0; j < numberOfTargets; j++)
+            elements.add(new SpotTarget());
 
-        for(int j = 0; j < numberOfTargets; j++){
-            SpotTarget newTarget = new SpotTarget();
-            elements.add(newTarget);
-            newTarget.addObserver(this);
-        }
+        for(int k = 0; k < numberOfDropTargets; k++)
+            elements.add(new DropTarget());
 
-        for(int k = 0; k < numberOfDropTargets; k++) {
-            DropTarget newTarget = new DropTarget();
-            elements.add(newTarget);
-            newTarget.addObserver(this);
-        }
+        for (Hittable hittable : elements)
+            hittable.addObserver(this);
     }
 
     public GameTable(String name, int numberOfBumpers, double prob, int numberOfTargets, int numberOfDropTargets, long seed){
         this.name = name;
         random.setSeed(seed);
         for(int i = 0; i < numberOfBumpers; i++)
-            if(random.nextDouble() < prob){
-                PopBumper newBumper = new PopBumper();
-                newBumper.setSeed(seed);
-                elements.add(newBumper);
-                newBumper.addObserver(this);
-            }
-            else{
-                KickerBumper newBumper = new KickerBumper();
-                newBumper.setSeed(seed);
-                elements.add(newBumper);
-                newBumper.addObserver(this);
-            }
+            if(random.nextDouble() < prob)
+                elements.add(new PopBumper());
+            else
+                elements.add(new KickerBumper());
+        for(int j = 0; j < numberOfTargets; j++)
+            elements.add(new SpotTarget());
 
-        for(int j = 0; j < numberOfTargets; j++){
-            SpotTarget newTarget = new SpotTarget();
-            newTarget.setSeed(seed);
-            elements.add(newTarget);
-            newTarget.addObserver(this);
-        }
+        for(int k = 0; k < numberOfDropTargets; k++)
+            elements.add(new DropTarget());
 
-        for(int k = 0; k < numberOfDropTargets; k++) {
-            DropTarget newTarget = new DropTarget();
-            newTarget.setSeed(seed);
-            elements.add(newTarget);
-            newTarget.addObserver(this);
+        for (Hittable hittable : elements) {
+            hittable.setSeed(seed);
+            hittable.addObserver(this);
         }
     }
 

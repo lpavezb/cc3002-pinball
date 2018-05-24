@@ -48,4 +48,16 @@ public class BonusTest extends GameTest {
         assertEquals(1, dropTargetBonus.timesTriggered());
     }
 
+    @Test
+    public void timesTriggeredTest(){
+        Bonus extraBallBonus = game.getExtraBallBonus();
+        assertEquals(0, extraBallBonus.timesTriggered());
+
+        extraBallBonus.trigger(game);
+        assertEquals(1, extraBallBonus.timesTriggered());
+
+        extraBallBonus.trigger(game);
+        assertEquals(2, extraBallBonus.timesTriggered());
+    }
+
 }
