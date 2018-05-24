@@ -3,6 +3,14 @@ package logic.gameelements.target;
 import logic.inverseVisitor.JackPotBonusVisitor;
 import logic.visitor.Visitor;
 
+/**
+ * Class that represents a Target object.
+ *
+ * @author Lukas Pavez
+ * @see Target
+ * @see AbstractTarget
+ * @see DropTarget
+ */
 public class SpotTarget extends AbstractTarget {
     public SpotTarget(){
         super(0);

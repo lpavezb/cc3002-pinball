@@ -11,6 +11,7 @@ import java.util.*;
  * Interface that represents the basics of a table to be played on.
  *
  * @author Juan-Pablo Silva
+ * @author Lukas Pavez
  */
 public interface Table extends Observer {
     /**
@@ -35,14 +36,31 @@ public interface Table extends Observer {
     int getCurrentlyDroppedDropTargets();
 
     /**
+     * Gets the {@link List} of {@link Hittable}s in the table.
+     *
+     * @return the hittables in the table
+     */
+    List<Hittable> getHittables();
+
+    /**
      * Gets the {@link List} of {@link Bumper}s in the table.
      *
      * @return the bumpers in the table
      */
     List<Bumper> getBumpers();
 
+    /**
+     * Gets the {@link List} of {@link PopBumper}s in the table.
+     *
+     * @return the popBumpers in the table
+     */
     List<PopBumper> getPopBumpers();
 
+    /**
+     * Gets the {@link List} of {@link KickerBumper}s in the table.
+     *
+     * @return the kickerBumpers in the table
+     */
     List<KickerBumper> getKickerBumpers();
 
     /**
@@ -52,8 +70,18 @@ public interface Table extends Observer {
      */
     List<Target> getTargets();
 
+    /**
+     * Gets the {@link List} of {@link SpotTarget}s in the table.
+     *
+     * @return the spotTargets in the table
+     */
     List<SpotTarget> getSpotTargets();
 
+    /**
+     * Gets the {@link List} of {@link DropTarget}s in the table.
+     *
+     * @return the dropTargets in the table
+     */
     List<DropTarget> getDropTargets();
 
     /**
@@ -73,15 +101,39 @@ public interface Table extends Observer {
      */
     boolean isPlayableTable();
 
+    /**
+     * Method to use the visitor pattern, sends a visitor to Game
+     *
+     * @param extraBallBonusVisitor visitor to send
+     */
     void visitExtraBallBonus(ExtraBallBonusVisitor extraBallBonusVisitor);
 
+    /**
+     * Method to use the visitor pattern, sends a visitor to Game
+     *
+     * @param jackPotBonusVisitor visitor to send
+     */
     void visitJackPotBonus(JackPotBonusVisitor jackPotBonusVisitor);
 
+    /**
+     * Method to use the visitor pattern, sends a visitor to Game
+     *
+     * @param dropTargetBonusVisitor visitor to send
+     */
     void visitDropTargetBonus(DropTargetBonusVisitor dropTargetBonusVisitor);
 
+    /**
+     * Method to use the visitor pattern, sends a visitor to Game
+     *
+     * @param scoreVisitor visitor to send
+     */
     void visitScore(ScoreVisitor scoreVisitor);
 
+    /**
+     * Add an Observer
+     *
+     * @see Observer
+     * @param o Observer
+     */
     void addObserver(Observer o);
-
-    List<Hittable> getElements();
 }

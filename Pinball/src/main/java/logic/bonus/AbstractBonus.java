@@ -2,6 +2,15 @@ package logic.bonus;
 
 import controller.Game;
 
+/**
+ * Abstract class that represents a bonus object.
+ *
+ * @author Lukas Pavez
+ * @see Bonus
+ * @see ExtraBallBonus
+ * @see JackPotBonus
+ * @see DropTargetBonus
+ */
 public abstract class AbstractBonus implements Bonus{
     private int nTimesTriggered;
 

@@ -10,6 +10,7 @@ import java.util.*;
  * <p>Objects that are game elements should implement this interface.</p>
  *
  * @author Juan-Pablo Silva
+ * @author Lukas Pavez
  * @see logic.gameelements.bumper.Bumper
  * @see logic.gameelements.target.Target
  */
@@ -29,13 +30,39 @@ public interface Hittable {
      */
     int getScore();
 
+    /**
+     * Sets the seed to the random variable of the Hittable
+     *
+     * @param seed seed to set
+     */
     void setSeed(long seed);
 
+    /**
+     * Gets the Random object of the Hittable
+     *
+     * @see Random
+     * @return Random
+     */
     Random getRandom();
 
+    /**
+     * Sets the score of the Hittable
+     *
+     * @param score score to set
+     */
     void setScore(int score);
 
+    /**
+     * Accepts the visitor
+     * @param visitor
+     */
     void accept(Visitor visitor);
 
+    /**
+     * Add an Observer
+     *
+     * @see Observer
+     * @param o Observer
+     */
     void addObserver(Observer o);
 }

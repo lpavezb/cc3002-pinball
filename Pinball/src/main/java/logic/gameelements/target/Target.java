@@ -6,6 +6,7 @@ import logic.gameelements.Hittable;
  * Interface that represents operations related to a target behavior.
  *
  * @author Juan-Pablo Silva
+ * @author Lukas Pavez
  * @see SpotTarget
  * @see DropTarget
  */

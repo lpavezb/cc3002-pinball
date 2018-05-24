@@ -1,11 +1,21 @@
 package logic.gameelements.target;
 
-import logic.inverseVisitor.DropTargetBonusVisitor;
-import logic.inverseVisitor.ExtraBallBonusVisitor;
-import logic.inverseVisitor.ScoreVisitor;
+import logic.inverseVisitor.*;
 import logic.visitor.Visitor;
 
+/**
+ * Class that represents a Target object.
+ *
+ * @author Lukas Pavez
+ * @see Target
+ * @see AbstractTarget
+ * @see SpotTarget
+ */
 public class DropTarget extends AbstractTarget {
+
+    /**
+     * Class constructor
+     */
     public DropTarget(){ super(100); }
 
     @Override

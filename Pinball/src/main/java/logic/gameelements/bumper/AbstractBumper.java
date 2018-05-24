@@ -3,7 +3,14 @@ import logic.gameelements.AbstractHittable;
 import logic.inverseVisitor.ExtraBallBonusVisitor;
 import logic.inverseVisitor.ScoreVisitor;
 
-
+/**
+ * Abstract class that represents a Bumper object.
+ *
+ * @author Lukas Pavez
+ * @see Bumper
+ * @see KickerBumper
+ * @see PopBumper
+ */
 public abstract class AbstractBumper extends AbstractHittable implements Bumper {
     private int initialScore;
     private int upgradeScore;
@@ -11,6 +18,9 @@ public abstract class AbstractBumper extends AbstractHittable implements Bumper 
     private int timesHit;
     private boolean upgraded;
 
+    /**
+     * Class constructor
+     */
     public AbstractBumper(int initialScore, int upgradeScore, int hitTimesToUpgrade){
         this.initialScore = initialScore;
         this.upgradeScore = upgradeScore;
@@ -53,6 +63,9 @@ public abstract class AbstractBumper extends AbstractHittable implements Bumper 
         return getScore();
     }
 
+    /**
+     * Method to trigger an extraBallBonus with a probability of 10%
+     */
     private void tryTriggerBonus(){
         if(getRandom().nextDouble() < 0.1){
             notifyUp(new ExtraBallBonusVisitor());

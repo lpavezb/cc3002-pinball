@@ -3,8 +3,16 @@ package logic.bonus;
 import controller.Game;
 import logic.table.Table;
 
+/**
+ * Class that represents a bonus object.
+ *
+ * @author Lukas Pavez
+ * @see Bonus
+ * @see ExtraBallBonus
+ * @see JackPotBonus
+ */
 public class DropTargetBonus extends AbstractBonus {
-    //gives 1000000 points and upgrades all bumpers
+
     @Override
     public void trigger(Game game) {
         game.addScore(1000000);

@@ -4,9 +4,17 @@ import logic.gameelements.target.*;
 
 import java.util.*;
 
+/**
+ * Class that represents a Visitor object
+ *
+ * @author Lukas Pavez
+ */
 public class TargetVisitor extends Visitor {
     private List<Target> targets;
 
+    /**
+     * Class constructor
+     */
     public TargetVisitor(){ targets = new ArrayList<>(); }
 
     @Override
@@ -15,5 +23,10 @@ public class TargetVisitor extends Visitor {
     @Override
     public void visitSpotTarget(SpotTarget spotTarget) { targets.add(spotTarget); }
 
+    /**
+     * Gets the visited Targets
+     *
+     * @return list of Targets
+     */
     public List<Target> getTargets() { return targets; }
 }

@@ -8,12 +8,28 @@ import logic.visitor.*;
 
 import java.util.*;
 
+/**
+ * Class that represents a Table
+ *
+ * @author Lukas Pavez
+ * @see Table
+ * @see NullTable
+ */
 public class GameTable extends Observable implements Table{
     private String name;
     private List<Hittable> elements = new ArrayList<>();
 
     private Random random = new Random();
 
+    /**
+     * class constructor
+     *
+     * @param name name of the table
+     * @param numberOfBumpers number of Bumpers of the table
+     * @param prob probability of a Bumper to be a PopBumper
+     * @param numberOfTargets number of Targets of the table
+     * @param numberOfDropTargets number of DropTargets of the table
+     */
     public GameTable(String name, int numberOfBumpers, double prob, int numberOfTargets, int numberOfDropTargets){
         this.name = name;
         for(int i = 0; i < numberOfBumpers; i++)
@@ -30,6 +46,17 @@ public class GameTable extends Observable implements Table{
         for (Hittable hittable : elements)
             hittable.addObserver(this);
     }
+
+    /**
+     * class constructor
+     *
+     * @param name name of the table
+     * @param numberOfBumpers number of Bumpers of the table
+     * @param prob probability of a Bumper to be a PopBumper
+     * @param numberOfTargets number of Targets of the table
+     * @param numberOfDropTargets number of DropTargets of the table
+     * @param seed seed to set the Random for testing
+     */
 
     public GameTable(String name, int numberOfBumpers, double prob, int numberOfTargets, int numberOfDropTargets, long seed){
         this.name = name;
@@ -155,7 +182,7 @@ public class GameTable extends Observable implements Table{
     }
 
     @Override
-    public List<Hittable> getElements() {
+    public List<Hittable> getHittables() {
         return elements;
     }
 

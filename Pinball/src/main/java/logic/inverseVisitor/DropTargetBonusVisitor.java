@@ -6,6 +6,12 @@ import logic.table.Table;
 
 import java.util.List;
 
+/**
+ * Class that represents a IVisitor object
+ *
+ * @author Lukas Pavez
+ * @see IVisitor
+ */
 public class DropTargetBonusVisitor implements IVisitor {
 
     @Override

@@ -20,7 +20,7 @@ public class NullTableTest {
 
     @Test
     public void getElements(){
-        assertEquals(0, table.getElements().size());
+        assertEquals(0, table.getHittables().size());
     }
 
     @Test

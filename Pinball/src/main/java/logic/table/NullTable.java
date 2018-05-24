@@ -7,6 +7,13 @@ import logic.inverseVisitor.*;
 
 import java.util.*;
 
+/**
+ * Class that represents a Table
+ *
+ * @author Lukas Pavez
+ * @see Table
+ * @see NullTable
+ */
 public class NullTable extends Observable implements Table {
     @Override
     public String getTableName() { return "There is no table"; }
@@ -56,7 +63,7 @@ public class NullTable extends Observable implements Table {
     public void visitScore(ScoreVisitor scoreVisitor) { }
 
     @Override
-    public List<Hittable> getElements() {
+    public List<Hittable> getHittables() {
         return new ArrayList<>();
     }
 

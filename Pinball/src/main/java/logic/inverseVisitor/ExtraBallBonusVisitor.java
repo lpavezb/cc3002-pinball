@@ -3,6 +3,12 @@ package logic.inverseVisitor;
 import controller.Game;
 import logic.table.Table;
 
+/**
+ * Class that represents a IVisitor object
+ *
+ * @author Lukas Pavez
+ * @see IVisitor
+ */
 public class ExtraBallBonusVisitor implements IVisitor {
 
     @Override

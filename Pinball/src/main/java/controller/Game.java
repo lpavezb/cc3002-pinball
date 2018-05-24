@@ -10,6 +10,9 @@ import java.util.*;
  * Game logic controller class.
  *
  * @author Juan-Pablo Silva
+ * @author Lukas Pavez
+ *
+ * @see Observer
  */
 public class Game implements Observer {
     private Bonus dropTargetBonus;
@@ -21,6 +24,9 @@ public class Game implements Observer {
     private int score;
     private int balls;
 
+    /**
+     * Class constructor
+     */
     public Game(){
         dropTargetBonus = new DropTargetBonus();
         extraBallBonus = new ExtraBallBonus();
@@ -133,12 +139,27 @@ public class Game implements Observer {
         return balls == 0;
     }
 
+    /**
+     * Adds the given value to the current score
+     *
+     * @param score the new table
+     */
     public void addScore(int score) { this.score += score; }
 
+
+    /**
+     * Trigger ExtraBallBonus
+     */
     public void triggerExtraBallBonus() { extraBallBonus.trigger(this); }
 
+    /**
+     * Trigger DropTargetBonus
+     */
     public void triggerDropTargetBonus() { dropTargetBonus.trigger(this); }
 
+    /**
+     * Trigger JackPotBonus
+     */
     public void triggerJackPotBonus() { jackPotBonus.trigger(this); }
 
     @Override
