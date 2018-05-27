@@ -31,25 +31,32 @@ public class BumperTest extends GameTest {
     @Test
     public void kickerBumperUpgradeTest(){
         Bumper kickerBumper = kickerBumpers.get(0);
-        kickerBumper.hit();
-        kickerBumper.hit();
-        kickerBumper.hit();
-        kickerBumper.hit();
+        kickerBumper.hit(); //+500
+        kickerBumper.hit(); //+500
+        kickerBumper.hit(); //+500
+        kickerBumper.hit(); //+500
         assertFalse(kickerBumper.isUpgraded());
 
-        kickerBumper.hit();
+        assertEquals(2000, game.getCurrentScore());
+
+        kickerBumper.hit(); //+1000
         assertTrue(kickerBumper.isUpgraded());
+        assertEquals(3000, game.getCurrentScore());
     }
 
     @Test
     public void popBumperUpgradeTest(){
         Bumper popBumper = popBumpers.get(0);
-        popBumper.hit();
-        popBumper.hit();
+        popBumper.hit(); //+100
+        popBumper.hit(); //+100
         assertFalse(popBumper.isUpgraded());
 
-        popBumper.hit();
+        assertEquals(200, game.getCurrentScore());
+
+        popBumper.hit(); //+300
         assertTrue(popBumper.isUpgraded());
+
+        assertEquals(500, game.getCurrentScore());
     }
 
     @Test
