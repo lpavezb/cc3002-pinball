@@ -20,6 +20,7 @@
 .idea/**/uiDesigner.xml
 
 # Gradle:
+/.idea/
 .idea/**/gradle.xml
 .idea/**/libraries
 
@@ -35,6 +36,7 @@ cmake-build-debug/
 ## Plugin-specific files:
 
 # IntelliJ
+/target/
 /out/
 
 # mpeltonen/sbt-idea plugin

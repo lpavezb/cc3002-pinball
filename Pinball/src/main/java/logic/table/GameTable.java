@@ -19,34 +19,6 @@ public class GameTable extends Observable implements Table{
     private String name;
     private List<Hittable> elements = new ArrayList<>();
 
-    private Random random = new Random();
-
-    /**
-     * class constructor
-     *
-     * @param name name of the table
-     * @param numberOfBumpers number of Bumpers of the table
-     * @param prob probability of a Bumper to be a PopBumper
-     * @param numberOfTargets number of Targets of the table
-     * @param numberOfDropTargets number of DropTargets of the table
-     */
-    public GameTable(String name, int numberOfBumpers, double prob, int numberOfTargets, int numberOfDropTargets){
-        this.name = name;
-        for(int i = 0; i < numberOfBumpers; i++)
-            if(random.nextDouble() < prob)
-                elements.add(new PopBumper());
-            else
-                elements.add(new KickerBumper());
-        for(int j = 0; j < numberOfTargets; j++)
-            elements.add(new SpotTarget());
-
-        for(int k = 0; k < numberOfDropTargets; k++)
-            elements.add(new DropTarget());
-
-        for (Hittable hittable : elements)
-            hittable.addObserver(this);
-    }
-
     /**
      * class constructor
      *
@@ -60,6 +32,7 @@ public class GameTable extends Observable implements Table{
 
     public GameTable(String name, int numberOfBumpers, double prob, int numberOfTargets, int numberOfDropTargets, long seed){
         this.name = name;
+        Random random = new Random();
         random.setSeed(seed);
         for(int i = 0; i < numberOfBumpers; i++)
             if(random.nextDouble() < prob)

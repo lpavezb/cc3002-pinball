@@ -25,8 +25,14 @@ public class GameTest {
     public void setUp(){
         game = new Game();
         assertFalse(game.isPlayableTable());
-        table = new GameTable("pinball", 10, 0.5, 3, 3, 0);
-        Table table1 = new GameTable("randomPinball", 10, 0.5, 3, 3);
+        TableFactory factory = new TableFactory();
+        factory.setName("pinball");
+        factory.setNumberOfBumpers(10);
+        factory.setProb(0.5);
+        factory.setNumberOfTargets(3);
+        factory.setNumberOfDropTargets(3);
+        factory.setSeed(0);
+        table = factory.createTable();
         game.setGameTable(table);
         assertTrue(game.isPlayableTable());
 

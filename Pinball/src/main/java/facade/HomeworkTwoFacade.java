@@ -6,6 +6,7 @@ import logic.gameelements.bumper.Bumper;
 import logic.gameelements.target.Target;
 import logic.table.GameTable;
 import logic.table.Table;
+import logic.table.TableFactory;
 
 import java.util.List;
 
@@ -67,7 +68,13 @@ public class HomeworkTwoFacade {
      * @return a new table determined by the parameters
      */
     public Table newPlayableTableWithNoTargets(String name, int numberOfBumpers, double prob) {
-        return new GameTable(name, numberOfBumpers, prob, 0, 0);
+        TableFactory factory = new TableFactory();
+        factory.setName(name);
+        factory.setNumberOfBumpers(numberOfBumpers);
+        factory.setProb(prob);
+        factory.setNumberOfTargets(0);
+        factory.setNumberOfDropTargets(0);
+        return factory.createTable();
     }
 
     /**
@@ -81,7 +88,13 @@ public class HomeworkTwoFacade {
      * @return a new table determined by the parameters
      */
     public Table newFullPlayableTable(String name, int numberOfBumpers, double prob, int numberOfTargets, int numberOfDropTargets) {
-        return new GameTable(name, numberOfBumpers, prob, numberOfTargets, numberOfDropTargets);
+        TableFactory factory = new TableFactory();
+        factory.setName(name);
+        factory.setNumberOfBumpers(numberOfBumpers);
+        factory.setProb(prob);
+        factory.setNumberOfTargets(numberOfTargets);
+        factory.setNumberOfDropTargets(numberOfDropTargets);
+        return factory.createTable();
     }
 
     /**
