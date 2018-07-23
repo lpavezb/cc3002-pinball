@@ -25,10 +25,12 @@ public class GameTest {
     public void setUp(){
         game = new Game();
         assertFalse(game.isPlayableTable());
-        TableFactory factory = new TableFactory();
-        factory.setName("pinball");
-        factory.setSeed(0);
-        table = factory.createTable();
+
+        table = new TableFactory()
+                .setName("pinball")
+                .setSeed(0)
+                .createTable();
+
         game.setGameTable(table);
         assertTrue(game.isPlayableTable());
 

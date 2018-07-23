@@ -19,17 +19,35 @@ public class TableFactory {
         seed = new Random().nextLong();
     }
 
-    public void setName(String name) { this.name = name; }
+    public TableFactory setName(String name) {
+        this.name = name;
+        return this;
+    }
 
-    public void setNumberOfBumpers(int numberOfBumpers) { this.numberOfBumpers = numberOfBumpers; }
+    public TableFactory setNumberOfBumpers(int numberOfBumpers) {
+        this.numberOfBumpers = numberOfBumpers;
+        return this;
+    }
 
-    public void setProb(double prob) { this.prob = prob; }
+    public TableFactory setProb(double prob) {
+        this.prob = prob;
+        return this;
+    }
 
-    public void setNumberOfTargets(int numberOfTargets) { this.numberOfTargets = numberOfTargets; }
+    public TableFactory setNumberOfTargets(int numberOfTargets) {
+        this.numberOfTargets = numberOfTargets;
+        return this;
+    }
 
-    public void setNumberOfDropTargets(int numberOfDropTargets) { this.numberOfDropTargets = numberOfDropTargets; }
+    public TableFactory setNumberOfDropTargets(int numberOfDropTargets) {
+        this.numberOfDropTargets = numberOfDropTargets;
+        return this;
+    }
 
-    public void setSeed(long seed) { this.seed = seed; }
+    public TableFactory setSeed(long seed) {
+        this.seed = seed;
+        return this;
+    }
 
     public Table createTable(){
         return new GameTable(name, numberOfBumpers, prob, numberOfTargets, numberOfDropTargets, seed);

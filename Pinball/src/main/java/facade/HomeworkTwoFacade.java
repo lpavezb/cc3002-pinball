@@ -68,13 +68,13 @@ public class HomeworkTwoFacade {
      * @return a new table determined by the parameters
      */
     public Table newPlayableTableWithNoTargets(String name, int numberOfBumpers, double prob) {
-        TableFactory factory = new TableFactory();
-        factory.setName(name);
-        factory.setNumberOfBumpers(numberOfBumpers);
-        factory.setProb(prob);
-        factory.setNumberOfTargets(0);
-        factory.setNumberOfDropTargets(0);
-        return factory.createTable();
+        return new TableFactory()
+            .setName(name)
+            .setNumberOfBumpers(numberOfBumpers)
+            .setProb(prob)
+            .setNumberOfTargets(0)
+            .setNumberOfDropTargets(0)
+            .createTable();
     }
 
     /**
@@ -88,13 +88,13 @@ public class HomeworkTwoFacade {
      * @return a new table determined by the parameters
      */
     public Table newFullPlayableTable(String name, int numberOfBumpers, double prob, int numberOfTargets, int numberOfDropTargets) {
-        TableFactory factory = new TableFactory();
-        factory.setName(name);
-        factory.setNumberOfBumpers(numberOfBumpers);
-        factory.setProb(prob);
-        factory.setNumberOfTargets(numberOfTargets);
-        factory.setNumberOfDropTargets(numberOfDropTargets);
-        return factory.createTable();
+        return new TableFactory()
+            .setName(name)
+            .setNumberOfBumpers(numberOfBumpers)
+            .setProb(prob)
+            .setNumberOfTargets(numberOfTargets)
+            .setNumberOfDropTargets(numberOfDropTargets)
+            .createTable();
     }
 
     /**
