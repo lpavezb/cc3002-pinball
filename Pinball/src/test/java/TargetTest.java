@@ -50,11 +50,14 @@ public class TargetTest extends GameTest {
         dropTarget1.hit(); // hit again same target, + 0
         assertEquals(200, game.getCurrentScore());
 
+        assertEquals(2, table.getCurrentlyDroppedDropTargets());
+
         dropTarget2.hit(); //+100 + 1000000 bonus
         assertEquals(1000300, game.getCurrentScore());
 
         for(Bumper bumper : bumpers)
             assertTrue(bumper.isUpgraded());
+        assertEquals(0, table.getCurrentlyDroppedDropTargets());
     }
 
     @Test
@@ -84,9 +87,10 @@ public class TargetTest extends GameTest {
 
     @Test
     public void resetAllTargetsTest(){
-        for(DropTarget dropTarget : dropTargets) {
-            dropTarget.hit();
-            assertFalse(dropTarget.isActive());
+        // only 2 of the 3 targets are hit
+        for(int i = 0; i<2; i++) {
+            dropTargets.get(i).hit();
+            assertFalse(dropTargets.get(i).isActive());
         }
 
         table.resetDropTargets();
@@ -105,6 +109,20 @@ public class TargetTest extends GameTest {
 
 
         assertEquals(2, table.getCurrentlyDroppedDropTargets());
+
+        dropTarget0.reset();
+        assertEquals(1, table.getCurrentlyDroppedDropTargets());
+
+        dropTarget1.reset();
+        assertEquals(0, table.getCurrentlyDroppedDropTargets());
+
+        dropTarget0.hit();
+        dropTarget1.hit();
+
+        assertEquals(2, table.getCurrentlyDroppedDropTargets());
+        table.resetDropTargets();
+
+        assertEquals(0, table.getCurrentlyDroppedDropTargets());
     }
 
     @Test

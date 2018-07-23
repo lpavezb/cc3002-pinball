@@ -27,10 +27,6 @@ public class GameTest {
         assertFalse(game.isPlayableTable());
         TableFactory factory = new TableFactory();
         factory.setName("pinball");
-        factory.setNumberOfBumpers(10);
-        factory.setProb(0.5);
-        factory.setNumberOfTargets(3);
-        factory.setNumberOfDropTargets(3);
         factory.setSeed(0);
         table = factory.createTable();
         game.setGameTable(table);
