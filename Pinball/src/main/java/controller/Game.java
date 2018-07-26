@@ -38,6 +38,10 @@ public class Game implements Observer {
         balls = 5;
     }
 
+    public int getBalls() {
+        return balls;
+    }
+
     /**
      * Gets whether the current table is playable or not.
      *

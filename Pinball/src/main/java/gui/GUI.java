@@ -13,25 +13,31 @@ import com.almasb.fxgl.physics.*;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.settings.GameSettings;
+import controller.Game;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import logic.table.NullTable;
+import logic.table.Table;
 
 
 public class GUI extends GameApplication {
+    private int inGameBalls = 0;
+    private Entity gameBall;
+    private Game game;
     private Entity leftFlipper;
     private Entity rightFlipper;
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setWidth(600);
         settings.setHeight(600);
-        settings.setTitle("Sample");
+        settings.setTitle("Pinball");
         settings.setVersion("pre-alpha");
     }
 
-    public Entity newPlayer(double x, double y, GameType type){
+    public Entity newFlipper(double x, double y, GameType type){
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
         physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.1f).friction(0f));
@@ -60,7 +66,7 @@ public class GUI extends GameApplication {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.1f).friction(0f));
-        physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(5 * 60 , 0));
+        physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(0 , -8 * 60));
         return Entities.builder()
                 .at(x, y)
                 .type(GameType.BALL)
@@ -72,13 +78,13 @@ public class GUI extends GameApplication {
 
     @Override
     protected void initGame() {
-        Entity ball = newBall(500, 500);
+        game = new Game();
         Entity bkg = newBackground();
-        rightFlipper = newPlayer(300, 500, GameType.RIGHT_FLIPPER);
+        rightFlipper = newFlipper(300, 470, GameType.RIGHT_FLIPPER);
         rightFlipper.rotateBy(-30);
-        leftFlipper = newPlayer(200, 500, GameType.LEFT_FLIPPER);
+        leftFlipper = newFlipper(180, 470, GameType.LEFT_FLIPPER);
         leftFlipper.rotateBy(30);
-        getGameWorld().addEntities(bkg, newWalls(), rightFlipper, leftFlipper, ball);
+        getGameWorld().addEntities(bkg, newWalls(), leftFlipper, rightFlipper);
 
     }
 
@@ -86,10 +92,9 @@ public class GUI extends GameApplication {
     protected void initInput() {
         Input input = getInput();
 
-        input.addAction(new UserAction("Up") {
+        input.addAction(new UserAction("Left") {
             @Override
             protected void onAction() {
-                rightFlipper.getComponent(FlipperControl.class).up();
                 leftFlipper.getComponent(FlipperControl.class).up();
             }
 
@@ -99,6 +104,18 @@ public class GUI extends GameApplication {
             }
         }, KeyCode.A);
 
+        input.addAction(new UserAction("Right") {
+            @Override
+            protected void onAction() {
+                rightFlipper.getComponent(FlipperControl.class).up();
+            }
+
+            @Override
+            protected void onActionEnd() {
+                input.mockKeyPress(KeyCode.F8);
+            }
+        }, KeyCode.S);
+
         input.addAction(new UserAction("Down") {
             @Override
             protected void onAction() {
@@ -107,33 +124,53 @@ public class GUI extends GameApplication {
             }
 
         }, KeyCode.F8);
+
+        input.addAction(new UserAction("newBall") {
+            @Override
+            protected void onActionBegin() {
+                if(inGameBalls == 0){
+                    gameBall = newBall(300,400);
+                    getGameWorld().addEntity(gameBall);
+                    inGameBalls += 1;
+                }
+            }
+
+        }, KeyCode.SPACE);
     }
 
     @Override
     protected void initPhysics() {
         PhysicsWorld world = getPhysicsWorld();
         world.setGravity(0,800);
-        world.addCollisionHandler(new CollisionHandler(GameType.BALL, GameType.WALL){});
+        world.addCollisionHandler(new CollisionHandler(GameType.BALL, GameType.WALL){
+            @Override
+            protected void onHitBoxTrigger(Entity ball, Entity wall, HitBox boxBall, HitBox boxWall) {
+                if(boxWall.getName().equals("BOT")){
+                    ball.getComponent(PhysicsComponent.class).setLinearVelocity(0,0);
+                    ball.removeFromWorld();
+                    inGameBalls -= 1;
+                }
+            }
+        });
 
         world.addCollisionHandler(new CollisionHandler(GameType.LEFT_FLIPPER, GameType.BALL) {
             @Override
             protected void onCollisionBegin(Entity a, Entity b) {
-                collision(a, b);
+                sparks(b);
             }
         });
         world.addCollisionHandler(new CollisionHandler(GameType.RIGHT_FLIPPER, GameType.BALL) {
             @Override
             protected void onCollisionBegin(Entity a, Entity b) {
-                collision(a, b);
+                sparks(b);
             }
         });
-
     }
 
-    private void collision(Entity a, Entity b){
+    private void sparks(Entity ball){
         // 1. create entity
         Entity sparks = new Entity();
-        sparks.setPosition(b.getPosition());
+        sparks.setPosition(ball.getPosition());
 
         // 2. create and configure emitter + component
         ParticleEmitter emitter = ParticleEmitters.newSparkEmitter();
