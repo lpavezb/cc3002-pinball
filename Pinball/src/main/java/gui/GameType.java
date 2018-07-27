@@ -5,5 +5,6 @@ public enum GameType {
     RIGHT_FLIPPER,
     BALL,
     WALL,
-    HITTABLE
+    BUMPER,
+    TARGET
 }

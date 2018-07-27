@@ -1,6 +1,7 @@
 package gui;
 
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
@@ -19,14 +20,20 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import logic.gameelements.bumper.Bumper;
 import logic.table.NullTable;
 import logic.table.Table;
+import logic.table.TableFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GUI extends GameApplication {
     private int inGameBalls = 0;
     private Entity gameBall;
     private Game game;
+    private PinballFactory factory;
     private Entity leftFlipper;
     private Entity rightFlipper;
     @Override
@@ -37,24 +44,6 @@ public class GUI extends GameApplication {
         settings.setVersion("pre-alpha");
     }
 
-    public Entity newFlipper(double x, double y, GameType type){
-        PhysicsComponent physics = new PhysicsComponent();
-        physics.setBodyType(BodyType.KINEMATIC);
-        physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.1f).friction(0f));
-        return Entities.builder()
-                .at(x, y)
-                .type(type)
-                .bbox(new HitBox("flipper", BoundingShape.box(100,30)))
-                .viewFromNode(new Rectangle(100,30, Color.BLUE))
-                .with(physics, new CollidableComponent(true), new FlipperControl(type))
-                .build();
-    }
-
-    public static Entity newBackground(){
-        return Entities.builder()
-                .viewFromNode(new Rectangle(600,600, Color.BLACK))
-                .build();
-    }
     public static Entity newWalls(){
         Entity walls = Entities.makeScreenBounds(100);
         walls.setType(GameType.WALL);
@@ -62,29 +51,14 @@ public class GUI extends GameApplication {
         return walls;
     }
 
-    public static Entity newBall(double x, double y){
-        PhysicsComponent physics = new PhysicsComponent();
-        physics.setBodyType(BodyType.DYNAMIC);
-        physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.1f).friction(0f));
-        physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(0 , -8 * 60));
-        return Entities.builder()
-                .at(x, y)
-                .type(GameType.BALL)
-                .bbox(new HitBox("Ball", BoundingShape.circle(10)))
-                .viewFromNode(new Circle(10, Color.RED))
-                .with(physics, new CollidableComponent(true))
-                .build();
-    }
-
     @Override
     protected void initGame() {
         game = new Game();
-        Entity bkg = newBackground();
-        rightFlipper = newFlipper(300, 470, GameType.RIGHT_FLIPPER);
-        rightFlipper.rotateBy(-30);
-        leftFlipper = newFlipper(180, 470, GameType.LEFT_FLIPPER);
-        leftFlipper.rotateBy(30);
-        getGameWorld().addEntities(bkg, newWalls(), leftFlipper, rightFlipper);
+        factory = new PinballFactory();
+        rightFlipper = factory.newFlipper(300, 470, GameType.RIGHT_FLIPPER);
+        leftFlipper = factory.newFlipper(180, 470, GameType.LEFT_FLIPPER);
+        getGameScene().setBackgroundColor(Color.BLACK);
+        getGameWorld().addEntities(newWalls(), leftFlipper, rightFlipper);
 
     }
 
@@ -92,7 +66,7 @@ public class GUI extends GameApplication {
     protected void initInput() {
         Input input = getInput();
 
-        input.addAction(new UserAction("Left") {
+        input.addAction(new UserAction("LeftFlipper") {
             @Override
             protected void onAction() {
                 leftFlipper.getComponent(FlipperControl.class).up();
@@ -104,7 +78,7 @@ public class GUI extends GameApplication {
             }
         }, KeyCode.A);
 
-        input.addAction(new UserAction("Right") {
+        input.addAction(new UserAction("RightFlipper") {
             @Override
             protected void onAction() {
                 rightFlipper.getComponent(FlipperControl.class).up();
@@ -116,7 +90,7 @@ public class GUI extends GameApplication {
             }
         }, KeyCode.S);
 
-        input.addAction(new UserAction("Down") {
+        input.addAction(new UserAction("DownFlippers") {
             @Override
             protected void onAction() {
                 rightFlipper.getComponent(FlipperControl.class).down();
@@ -125,17 +99,38 @@ public class GUI extends GameApplication {
 
         }, KeyCode.F8);
 
-        input.addAction(new UserAction("newBall") {
+        input.addAction(new UserAction("NewBall") {
             @Override
             protected void onActionBegin() {
                 if(inGameBalls == 0){
-                    gameBall = newBall(300,400);
+                    gameBall = factory.newBall(300,400);
                     getGameWorld().addEntity(gameBall);
-                    inGameBalls += 1;
+                    //inGameBalls += 1;
                 }
             }
 
         }, KeyCode.SPACE);
+
+        input.addAction(new UserAction("NewTable") {
+            @Override
+            protected void onActionBegin() {
+                game.setGameTable(new TableFactory().setNumberOfBumpers(1)
+                                                    .setNumberOfDropTargets(0)
+                                                    .setNumberOfTargets(0)
+                                                    .createTable());
+                createElements();
+            }
+
+        }, KeyCode.N);
+    }
+
+    private void createElements() {
+        Table gameTable = game.getCurrentTable();
+        List<Bumper> bumpers = gameTable.getBumpers();
+        for (Bumper bumper : bumpers) {
+            Entity newBumper = factory.newBumper(bumper);
+            getGameWorld().addEntity(newBumper);
+        }
     }
 
     @Override
@@ -146,9 +141,8 @@ public class GUI extends GameApplication {
             @Override
             protected void onHitBoxTrigger(Entity ball, Entity wall, HitBox boxBall, HitBox boxWall) {
                 if(boxWall.getName().equals("BOT")){
-                    ball.getComponent(PhysicsComponent.class).setLinearVelocity(0,0);
-                    ball.removeFromWorld();
-                    inGameBalls -= 1;
+                    //ball.removeFromWorld();
+                    //inGameBalls -= 1;
                 }
             }
         });
@@ -163,6 +157,14 @@ public class GUI extends GameApplication {
             @Override
             protected void onCollisionBegin(Entity a, Entity b) {
                 sparks(b);
+            }
+        });
+        world.addCollisionHandler(new CollisionHandler(GameType.BUMPER, GameType.BALL) {
+            @Override
+            protected void onCollisionBegin(Entity a, Entity b) {
+                a.getComponent(BumperControl.class).hit();
+                sparks(b);
+                System.out.println(game.getCurrentScore());
             }
         });
     }
