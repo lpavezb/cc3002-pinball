@@ -33,4 +33,9 @@ public class DropTarget extends AbstractTarget {
 
     @Override
     public void accept(Visitor visitor) { visitor.visitDropTarget(this); }
+
+    @Override
+    public boolean isDropTarget() {
+        return true;
+    }
 }

@@ -30,4 +30,13 @@ public abstract class AbstractTarget extends AbstractHittable implements Target{
     @Override
     public void setActive(boolean activate) { activated = activate; }
 
+    @Override
+    public boolean isDropTarget() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpotTarget() {
+        return false;
+    }
 }

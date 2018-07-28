@@ -29,4 +29,9 @@ public class SpotTarget extends AbstractTarget {
 
     @Override
     public void accept(Visitor visitor) { visitor.visitSpotTarget(this); }
+
+    @Override
+    public boolean isSpotTarget() {
+        return true;
+    }
 }

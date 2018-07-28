@@ -19,4 +19,9 @@ public class PopBumper extends AbstractBumper {
 
     @Override
     public void accept(Visitor visitor) { visitor.visitPopBumper(this); }
+
+    @Override
+    public boolean isPopBumper() {
+        return true;
+    }
 }
