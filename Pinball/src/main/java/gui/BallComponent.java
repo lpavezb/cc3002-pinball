@@ -1,4 +1,6 @@
-package gui;/*
+package gui;
+
+/*
  * The MIT License (MIT)
  *
  * FXGL - JavaFX Game Library
@@ -36,7 +38,6 @@ import javafx.geometry.Point2D;
 public class BallComponent extends Component {
 
     private PhysicsComponent physics;
-    private int i = 0;
     private int maxVelocity = 8;
     @Override
     public void onUpdate(double tpf) {
