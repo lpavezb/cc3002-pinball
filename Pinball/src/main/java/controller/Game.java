@@ -130,7 +130,7 @@ public class Game implements Observer {
      * @return the new number of available balls
      */
     public int dropBall() {
-        balls -= 1;
+        balls = (balls==0) ? 0 : balls-1;
         return balls;
     }
 

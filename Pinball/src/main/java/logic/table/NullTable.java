@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class NullTable extends Observable implements Table {
     @Override
-    public String getTableName() { return "There is no table"; }
+    public String getTableName() { return ""; }
 
     @Override
     public int getNumberOfDropTargets() { return 0; }

@@ -21,7 +21,7 @@ public class HomeworkTwoFacade {
      *
      * @see Game
      */
-    private Game game;
+    private Game game = new Game();
 
     /**
      * Gets whether the current table is playable or not.
