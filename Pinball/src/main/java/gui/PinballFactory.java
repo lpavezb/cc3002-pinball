@@ -26,12 +26,15 @@ public class PinballFactory {
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.1f).friction(0f));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(0, -8 * 60));
-        return Entities.builder()
+        Entity ball = Entities.builder()
                 .at(x, y)
                 .type(GameType.BALL)
                 .viewFromNodeWithBBox(new Circle(10, Color.RED))
-                .with(physics, new CollidableComponent(true), new BallComponent())
+                .with(physics)
                 .build();
+        ball.addComponent(new CollidableComponent(true));
+        ball.addComponent(new BallComponent());
+        return ball;
     }
 
     public Entity newFlipper(double x, double y, GameType type) {
@@ -73,7 +76,7 @@ public class PinballFactory {
     }
 
     public Entity newWalls(){
-        Entity walls = Entities.makeScreenBounds(100);
+        Entity walls = Entities.makeScreenBounds(150);
         walls.setType(GameType.WALL);
         walls.addComponent(new CollidableComponent(true));
         return walls;
@@ -81,10 +84,11 @@ public class PinballFactory {
 
     public Entity newTarget(Target target) {
         Node view;
+        int size = 40;
         if (target.isDropTarget())
-            view = new Rectangle(20, 20, Color.BLUE);
+            view = new Rectangle(size, size, Color.YELLOW);
         else
-            view = new Rectangle(20, 20, Color.CYAN);
+            view = new Rectangle(size, size, Color.WHITE);
 
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.STATIC);

@@ -30,17 +30,18 @@ public class TargetControl extends Component {
     }
 
     public TargetControl(Target target){
+        int size = 40;
         this.target= target;
         time = 0;
         timeControl = 0;
         isActive = true;
         if (target.isDropTarget()) {
-            startView = new Rectangle(20, 20, Color.BLUE);
-            upgradeView = new Rectangle(20, 20, Color.DARKGREEN);
+            startView = new Rectangle(size, size, Color.YELLOW);
+            upgradeView = new Rectangle(size, size, Color.RED);
         }
         else {
-            startView = new Rectangle(20, 20, Color.CYAN);
-            upgradeView = new Rectangle(20, 20, Color.LAWNGREEN);
+            startView = new Rectangle(size, size, Color.WHITE);
+            upgradeView = new Rectangle(size, size, Color.PURPLE);
         }
     }
 

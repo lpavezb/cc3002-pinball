@@ -46,6 +46,8 @@ public class BallComponent extends Component {
     }
 
     private void limitVelocity() {
+        if (entity.getY()>570)
+            physics.setLinearVelocity(0, 0);
         if (Math.abs(physics.getLinearVelocity().getX()) < maxVelocity * 60) {
             physics.setLinearVelocity(Math.signum(physics.getLinearVelocity().getX()) * maxVelocity * 60,
                     physics.getLinearVelocity().getY());

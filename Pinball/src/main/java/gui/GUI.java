@@ -133,9 +133,9 @@ public class GUI extends GameApplication {
         input.addAction(new UserAction("NewTable") {
             @Override
             protected void onActionBegin() {
-                game.setGameTable(new TableFactory().setNumberOfBumpers(0)
+                game.setGameTable(new TableFactory().setNumberOfBumpers(2)
                                                     .setNumberOfDropTargets(2)
-                                                    .setNumberOfTargets(0)
+                                                    .setNumberOfTargets(2)
                                                     .createTable());
                 deleteElements();
                 createElements();
@@ -172,7 +172,7 @@ public class GUI extends GameApplication {
             @Override
             protected void onHitBoxTrigger(Entity ball, Entity wall, HitBox boxBall, HitBox boxWall) {
                 if(boxWall.getName().equals("BOT")){
-                    //ball.removeFromWorld();
+                    ball.removeFromWorld();
                     //inGameBalls -= 1;
                 }
             }
