@@ -1,5 +1,6 @@
 package gui;
 
+import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.entity.Entities;
@@ -16,6 +17,7 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.settings.GameSettings;
 import controller.Game;
+import javafx.geometry.Point2D;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -34,7 +36,7 @@ import java.util.Map;
 
 
 public class GUI extends GameApplication {
-    private int inGameBalls = 0;
+    private int inGameBalls;
     private Entity gameBall;
     private Game game;
     private PinballFactory factory;
@@ -59,26 +61,46 @@ public class GUI extends GameApplication {
         game = new Game();
         factory = new PinballFactory();
         Entity walls = factory.newWalls();
+        Entity infoBar = factory.newInfoBar();
+        inGameBalls = 0;
         rightFlipper = factory.newFlipper(300, 470, GameType.RIGHT_FLIPPER);
         leftFlipper = factory.newFlipper(180, 470, GameType.LEFT_FLIPPER);
         getGameScene().setBackgroundColor(Color.BLACK);
-        getGameWorld().addEntities(walls, leftFlipper, rightFlipper);
-
+        getGameWorld().addEntities(walls, leftFlipper, rightFlipper, infoBar);
     }
 
     @Override
     protected void onUpdate(double tpf) {
         getGameState().setValue("score", game.getCurrentScore());
+        getGameState().setValue("lives", game.getAvailableBalls());
     }
 
     @Override
     protected void initUI() {
-        Text uiScore = getUIFactory().newText("", Color.WHITE, 16.0);
-        uiScore.setTranslateX(100);
-        uiScore.setTranslateY(100);
+        int tx = 10;
+        int ty = 20;
+        Text scoreText = getUIFactory().newText("score: ", Color.BLACK, 16.0);
+        scoreText.setTranslateX(tx);
+        scoreText.setTranslateY(ty);
+
+        Text uiScore = getUIFactory().newText("", Color.BLACK, 16.0);
+        uiScore.setTranslateX(tx + 50);
+        uiScore.setTranslateY(ty);
         uiScore.textProperty().bind(getGameState().intProperty("score").asString());
 
-        getGameScene().addUINode(uiScore);
+        getGameScene().addUINodes(scoreText, uiScore);
+
+        ty+=20;
+        Text livesText = getUIFactory().newText("lives: ", Color.BLACK, 16.0);
+        livesText.setTranslateX(tx);
+        livesText.setTranslateY(ty);
+
+        Text uiLives = getUIFactory().newText("", Color.BLACK, 16.0);
+        uiLives.setTranslateX(tx + 50);
+        uiLives.setTranslateY(ty);
+        uiLives.textProperty().bind(getGameState().intProperty("lives").asString());
+
+        getGameScene().addUINodes(livesText, uiLives);
     }
 
     @Override
@@ -93,7 +115,7 @@ public class GUI extends GameApplication {
 
             @Override
             protected void onActionEnd() {
-                input.mockKeyPress(KeyCode.F8);
+                leftFlipper.getComponent(FlipperControl.class).down();
             }
         }, KeyCode.A);
 
@@ -105,18 +127,9 @@ public class GUI extends GameApplication {
 
             @Override
             protected void onActionEnd() {
-                input.mockKeyPress(KeyCode.F8);
+                rightFlipper.getComponent(FlipperControl.class).down();
             }
         }, KeyCode.S);
-
-        input.addAction(new UserAction("DownFlippers") {
-            @Override
-            protected void onAction() {
-                rightFlipper.getComponent(FlipperControl.class).down();
-                leftFlipper.getComponent(FlipperControl.class).down();
-            }
-
-        }, KeyCode.F8);
 
         input.addAction(new UserAction("NewBall") {
             @Override
@@ -168,26 +181,13 @@ public class GUI extends GameApplication {
     protected void initPhysics() {
         PhysicsWorld world = getPhysicsWorld();
         world.setGravity(0,800);
-        world.addCollisionHandler(new CollisionHandler(GameType.BALL, GameType.WALL){
+        world.addCollisionHandler(new CollisionHandler(GameType.BALL, GameType.WALL) {
             @Override
-            protected void onHitBoxTrigger(Entity ball, Entity wall, HitBox boxBall, HitBox boxWall) {
-                if(boxWall.getName().equals("BOT")){
-                    ball.removeFromWorld();
-                    //inGameBalls -= 1;
+            protected void onHitBoxTrigger(Entity ball, Entity wall, HitBox ballBox, HitBox wallBox) {
+                if(wallBox.getName().equals("BOT")) {
+                    ball.removeComponent(PhysicsComponent.class);
+                    getGameWorld().removeEntity(ball);
                 }
-            }
-        });
-
-        world.addCollisionHandler(new CollisionHandler(GameType.LEFT_FLIPPER, GameType.BALL) {
-            @Override
-            protected void onCollisionBegin(Entity a, Entity b) {
-                sparks(b);
-            }
-        });
-        world.addCollisionHandler(new CollisionHandler(GameType.RIGHT_FLIPPER, GameType.BALL) {
-            @Override
-            protected void onCollisionBegin(Entity a, Entity b) {
-                sparks(b);
             }
         });
         world.addCollisionHandler(new CollisionHandler(GameType.BUMPER, GameType.BALL) {
@@ -195,6 +195,7 @@ public class GUI extends GameApplication {
             protected void onCollisionBegin(Entity a, Entity b) {
                 a.getComponent(BumperControl.class).hit();
                 sparks(b);
+                //TODO: play bumper sound
             }
         });
         world.addCollisionHandler(new CollisionHandler(GameType.TARGET, GameType.BALL) {
@@ -202,6 +203,7 @@ public class GUI extends GameApplication {
             protected void onCollisionBegin(Entity a, Entity b) {
                 a.getComponent(TargetControl.class).hit();
                 sparks(b);
+                //TODO: play target sound
             }
         });
     }

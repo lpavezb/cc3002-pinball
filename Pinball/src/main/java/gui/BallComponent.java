@@ -42,12 +42,11 @@ public class BallComponent extends Component {
     @Override
     public void onUpdate(double tpf) {
         limitVelocity();
-        checkOffscreen();
     }
 
     private void limitVelocity() {
-        if (entity.getY()>570)
-            physics.setLinearVelocity(0, 0);
+        /*if (entity.getY()>600)
+            entity.removeFromWorld();*/
         if (Math.abs(physics.getLinearVelocity().getX()) < maxVelocity * 60) {
             physics.setLinearVelocity(Math.signum(physics.getLinearVelocity().getX()) * maxVelocity * 60,
                     physics.getLinearVelocity().getY());
@@ -56,22 +55,6 @@ public class BallComponent extends Component {
         if (Math.abs(physics.getLinearVelocity().getY()) > maxVelocity * 60 * 2) {
             physics.setLinearVelocity(physics.getLinearVelocity().getX(),
                     Math.signum(physics.getLinearVelocity().getY()) * maxVelocity * 60);
-        }
-    }
-
-    // this is a hack:
-    // we use a physics engine, so it is possible to push the ball against a wall
-    // so that it gets moved outside of the screen
-    private void checkOffscreen() {
-        if (getEntity().getBoundingBoxComponent().isOutside(FXGL.getApp()
-                .getGameScene()
-                .getViewport()
-                .getVisibleArea())) {
-
-            getEntity().getComponent(PhysicsComponent.class).reposition(new Point2D(
-                    FXGL.getAppWidth() / 2,
-                    FXGL.getAppHeight() / 2
-            ));
         }
     }
 }

@@ -17,8 +17,12 @@ public class BumperControl extends Component {
     @Override
     public void onUpdate(double tpf) {
         timeControl+=1;
-        if (timeControl%60==0) {
+        if (timeControl%60==0)
             time += 1;
+        if(bumper.isUpgraded() && !isUpgraded){
+            entity.getViewComponent().setView(upgradeView);
+            time = 0;
+            isUpgraded = true;
         }
         if(bumper.isUpgraded() && time==10){
             bumper.downgrade();
@@ -44,11 +48,6 @@ public class BumperControl extends Component {
 
     public void hit() {
         bumper.hit();
-        if(bumper.isUpgraded() && !isUpgraded){
-            entity.getViewComponent().setView(upgradeView);
-            time = 0;
-            isUpgraded = true;
-        }
     }
 
 

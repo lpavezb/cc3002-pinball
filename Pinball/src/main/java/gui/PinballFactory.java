@@ -11,6 +11,7 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -54,6 +55,39 @@ public class PinballFactory {
         return flipper;
     }
 
+    public Entity newWalls(){
+        double w = (double)FXGL.getSettings().getWidth();
+        double h = (double)FXGL.getSettings().getHeight();
+        double thickness = 100;
+        Entity walls = Entities.makeScreenBounds(100);
+        /*
+        TODO: use Entities.makeScreenBounds
+        al usar makeScreenBounds lanza error al remover bolita
+        Message: null
+        Type: NullPointerException
+        Method: Fixture.getProxyId()
+        Line: Fixture.java:263
+        */
+        /*Entity walls = Entities.builder()
+                .bbox(new HitBox("LEFT", new Point2D(-thickness, 0.0D), BoundingShape.box(thickness, h)))
+                .bbox(new HitBox("RIGHT", new Point2D(w, 0.0D), BoundingShape.box(thickness, h)))
+                .bbox(new HitBox("TOP", new Point2D(0.0D, -thickness), BoundingShape.box(w, thickness)))
+                .bbox(new HitBox("BOT", new Point2D(0.0D, h), BoundingShape.box(w, thickness)))
+                .with(new PhysicsComponent()).build();*/
+        walls.setType(GameType.WALL);
+        walls.addComponent(new CollidableComponent(true));
+        return walls;
+    }
+
+    public Entity newInfoBar(){
+        return Entities.builder()
+                .at(0,0)
+                .type(GameType.WALL)
+                .viewFromNodeWithBBox(new Rectangle(600,50,Color.WHITE))
+                .with(new PhysicsComponent(), new CollidableComponent(true))
+                .build();
+    }
+
     public Entity newBumper(Bumper aBumper) {
         Node view;
         if (aBumper.isKickerBumper())
@@ -65,7 +99,7 @@ public class PinballFactory {
         physics.setBodyType(BodyType.STATIC);
         physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.1f).friction(0f));
         Entity bumper = Entities.builder()
-                .at(FXGLMath.random(50, 550), FXGLMath.random(50, 250))
+                .at(FXGLMath.random(60, 550), FXGLMath.random(60, 250))
                 .type(GameType.BUMPER)
                 .viewFromNodeWithBBox(view)
                 .with(physics)
@@ -73,13 +107,6 @@ public class PinballFactory {
         bumper.addComponent(new CollidableComponent(true));
         bumper.addComponent(new BumperControl(aBumper));
         return bumper;
-    }
-
-    public Entity newWalls(){
-        Entity walls = Entities.makeScreenBounds(150);
-        walls.setType(GameType.WALL);
-        walls.addComponent(new CollidableComponent(true));
-        return walls;
     }
 
     public Entity newTarget(Target target) {
@@ -94,7 +121,7 @@ public class PinballFactory {
         physics.setBodyType(BodyType.STATIC);
         physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.1f).friction(0f));
         Entity bumper = Entities.builder()
-                .at(FXGLMath.random(50, 550), FXGLMath.random(50, 250))
+                .at(FXGLMath.random(60, 550), FXGLMath.random(60, 250))
                 .type(GameType.TARGET)
                 .viewFromNodeWithBBox(view)
                 .with(physics)

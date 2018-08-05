@@ -10,6 +10,21 @@ public class FlipperControl extends Component {
     private int maxAngle;
     private double velocity;
     private boolean right;
+    private boolean down;
+
+    @Override
+    public void onUpdate(double tpf) {
+        if(down){
+            double rot =entity.getRotation();
+            if (right ? rot>minAngle : rot<minAngle){
+                entity.getComponent(PhysicsComponent.class).setAngularVelocity(-1 * velocity);
+            }
+            else {
+                down = false;
+                stop();
+            }
+        }
+    }
 
     public FlipperControl(GameType type){
         right = type == GameType.RIGHT_FLIPPER;
@@ -17,14 +32,10 @@ public class FlipperControl extends Component {
         minAngle = -30*aux;
         maxAngle = 60*aux;
         velocity = 8*aux;
+        down = false;
     }
     public void down() {
-        double rot =entity.getRotation();
-        if (right ? rot>minAngle : rot<minAngle){
-            entity.getComponent(PhysicsComponent.class).setAngularVelocity(-1 * velocity);
-        }
-        else
-            stop();
+        down = true;
     }
 
     public void up() {

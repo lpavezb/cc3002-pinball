@@ -22,7 +22,12 @@ public class TargetControl extends Component {
         if (timeControl%60==0) {
             time += 1;
         }
-        if((!target.isActive() && time==4) || target.isActive() && !isActive){
+        if(!target.isActive() && isActive){
+            entity.getViewComponent().setView(upgradeView);
+            time = 0;
+            isActive = false;
+        }
+        if((!target.isActive() && time==20) || target.isActive() && !isActive){
             target.reset();
             entity.setView(startView);
             isActive = true;
@@ -47,10 +52,5 @@ public class TargetControl extends Component {
 
     public void hit() {
         target.hit();
-        if(!target.isActive() && isActive){
-            entity.getViewComponent().setView(upgradeView);
-            time = 0;
-            isActive = false;
-        }
     }
 }
