@@ -1,6 +1,5 @@
 package gui;
 
-import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.entity.Entities;
@@ -13,6 +12,7 @@ import com.almasb.fxgl.particle.ParticleComponent;
 import com.almasb.fxgl.particle.ParticleEmitter;
 import com.almasb.fxgl.particle.ParticleEmitters;
 import com.almasb.fxgl.physics.*;
+import com.almasb.fxgl.physics.box2d.dynamics.Body;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.settings.GameSettings;
@@ -24,20 +24,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import logic.gameelements.bumper.Bumper;
 import logic.gameelements.target.Target;
-import logic.table.NullTable;
 import logic.table.Table;
 import logic.table.TableFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 
 public class GUI extends GameApplication {
     private int inGameBalls;
-    private Entity gameBall;
     private Game game;
     private PinballFactory factory;
     private Entity leftFlipper;
@@ -135,8 +133,7 @@ public class GUI extends GameApplication {
             @Override
             protected void onActionBegin() {
                 if(inGameBalls == 0){
-                    gameBall = factory.newBall(300,400);
-                    getGameWorld().addEntity(gameBall);
+                    getGameWorld().addEntity(factory.newBall(300,400));
                     //inGameBalls += 1;
                 }
             }
@@ -185,7 +182,13 @@ public class GUI extends GameApplication {
             @Override
             protected void onHitBoxTrigger(Entity ball, Entity wall, HitBox ballBox, HitBox wallBox) {
                 if(wallBox.getName().equals("BOT")) {
+                    Body body = ball.getComponent(PhysicsComponent.class).getBody();
                     ball.removeComponent(PhysicsComponent.class);
+
+                    getMasterTimer().runOnceAfter(() -> {
+                        getPhysicsWorld().getJBox2DWorld().destroyBody(body);
+                    }, Duration.seconds(0.1));
+
                     getGameWorld().removeEntity(ball);
                 }
             }

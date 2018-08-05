@@ -30,7 +30,8 @@ public class PinballFactory {
         Entity ball = Entities.builder()
                 .at(x, y)
                 .type(GameType.BALL)
-                .viewFromNodeWithBBox(new Circle(10, Color.RED))
+                .bbox(new HitBox("Ball", BoundingShape.circle(10)))
+                .viewFromNode(new Circle(10, Color.RED))
                 .with(physics)
                 .build();
         ball.addComponent(new CollidableComponent(true));
@@ -47,7 +48,8 @@ public class PinballFactory {
                 .at(x, y)
                 .rotate(-30 * aux)
                 .type(type)
-                .viewFromNodeWithBBox(new Rectangle(100, 30, Color.BLUE))
+                .bbox(new HitBox("Flipper", BoundingShape.box(100, 30)))
+                .viewFromNode(new Rectangle(100, 30, Color.BLUE))
                 .with(physics)
                 .build();
         flipper.addComponent(new CollidableComponent(true));
@@ -101,7 +103,8 @@ public class PinballFactory {
         Entity bumper = Entities.builder()
                 .at(FXGLMath.random(60, 550), FXGLMath.random(60, 250))
                 .type(GameType.BUMPER)
-                .viewFromNodeWithBBox(view)
+                .bbox(new HitBox("Target", BoundingShape.circle(20)))
+                .viewFromNode(view)
                 .with(physics)
                 .build();
         bumper.addComponent(new CollidableComponent(true));
