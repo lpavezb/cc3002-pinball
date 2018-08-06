@@ -1,11 +1,8 @@
 package gui;
 
 import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.core.math.Vec2;
-import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.GameWorld;
-import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.particle.ParticleComponent;
@@ -13,16 +10,12 @@ import com.almasb.fxgl.particle.ParticleEmitter;
 import com.almasb.fxgl.particle.ParticleEmitters;
 import com.almasb.fxgl.physics.*;
 import com.almasb.fxgl.physics.box2d.dynamics.Body;
-import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
-import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.settings.GameSettings;
 import controller.Game;
 import javafx.geometry.Point2D;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import logic.gameelements.bumper.Bumper;
@@ -30,8 +23,10 @@ import logic.gameelements.target.Target;
 import logic.table.Table;
 import logic.table.TableFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 public class GUI extends GameApplication {
@@ -40,6 +35,7 @@ public class GUI extends GameApplication {
     private PinballFactory factory;
     private Entity leftFlipper;
     private Entity rightFlipper;
+    private Point2D[][] hittableAvailablePositions;
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setWidth(600);
@@ -65,6 +61,18 @@ public class GUI extends GameApplication {
         leftFlipper = factory.newFlipper(180, 470, GameType.LEFT_FLIPPER);
         getGameScene().setBackgroundColor(Color.BLACK);
         getGameWorld().addEntities(walls, leftFlipper, rightFlipper, infoBar);
+
+        hittableAvailablePositions = new Point2D[14][6];
+        int x = 20;
+        int y = 80;
+        for(int i=0; i<14; i++){
+            for(int j=0; j<6; j++){
+                hittableAvailablePositions[i][j] = new Point2D(x,y);
+                y+=40;
+            }
+            y=80;
+            x+=40;
+        }
     }
 
     @Override
@@ -134,7 +142,7 @@ public class GUI extends GameApplication {
             protected void onActionBegin() {
                 if(inGameBalls == 0){
                     getGameWorld().addEntity(factory.newBall(300,400));
-                    //inGameBalls += 1;
+                    inGameBalls += 1;
                 }
             }
 
@@ -161,19 +169,36 @@ public class GUI extends GameApplication {
     }
 
     private void createElements() {
+
+        List<Point2D> invalidPositions = new ArrayList<>();
         Table gameTable = game.getCurrentTable();
         List<Bumper> bumpers = gameTable.getBumpers();
         List<Target> targets = gameTable.getTargets();
         for (Bumper bumper : bumpers) {
-            Entity newBumper = factory.newBumper(bumper);
+            Point2D point = getPoint(invalidPositions);
+            Entity newBumper = factory.newBumper(bumper, point);
             getGameWorld().addEntity(newBumper);
         }
         for (Target target : targets) {
-            Entity newTarget = factory.newTarget(target);
+            Point2D point = getPoint(invalidPositions);
+            Entity newTarget = factory.newTarget(target, point);
             getGameWorld().addEntity(newTarget);
         }
     }
 
+    private Point2D getPoint(List<Point2D> invalidPositions){
+        Random r = new Random();
+        int x = r.nextInt(14);
+        int y = r.nextInt(6);
+        Point2D point = hittableAvailablePositions[x][y];
+        while(invalidPositions.contains(point)){
+            x = r.nextInt(14);
+            y = r.nextInt(6);
+            point = hittableAvailablePositions[x][y];
+        }
+        invalidPositions.add(point);
+        return point;
+    }
     @Override
     protected void initPhysics() {
         PhysicsWorld world = getPhysicsWorld();
@@ -190,6 +215,8 @@ public class GUI extends GameApplication {
                     }, Duration.seconds(0.1));
 
                     getGameWorld().removeEntity(ball);
+                    game.dropBall();
+                    inGameBalls-=1;
                 }
             }
         });

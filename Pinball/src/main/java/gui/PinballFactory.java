@@ -90,7 +90,7 @@ public class PinballFactory {
                 .build();
     }
 
-    public Entity newBumper(Bumper aBumper) {
+    public Entity newBumper(Bumper aBumper, Point2D position) {
         Node view;
         if (aBumper.isKickerBumper())
             view = new Circle(20, Color.BLUE);
@@ -101,7 +101,7 @@ public class PinballFactory {
         physics.setBodyType(BodyType.STATIC);
         physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.1f).friction(0f));
         Entity bumper = Entities.builder()
-                .at(FXGLMath.random(60, 550), FXGLMath.random(60, 250))
+                .at(position)
                 .type(GameType.BUMPER)
                 .bbox(new HitBox("Target", BoundingShape.circle(20)))
                 .viewFromNode(view)
@@ -112,7 +112,7 @@ public class PinballFactory {
         return bumper;
     }
 
-    public Entity newTarget(Target target) {
+    public Entity newTarget(Target target, Point2D position) {
         Node view;
         int size = 40;
         if (target.isDropTarget())
@@ -124,7 +124,7 @@ public class PinballFactory {
         physics.setBodyType(BodyType.STATIC);
         physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.1f).friction(0f));
         Entity bumper = Entities.builder()
-                .at(FXGLMath.random(60, 550), FXGLMath.random(60, 250))
+                .at(position)
                 .type(GameType.TARGET)
                 .viewFromNodeWithBBox(view)
                 .with(physics)
