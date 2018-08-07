@@ -1,5 +1,6 @@
 package gui;
 
+import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -20,6 +21,7 @@ public class BumperControl extends Component {
         if (timeControl%60==0)
             time += 1;
         if(bumper.isUpgraded() && !isUpgraded){
+            FXGL.getAudioPlayer().playSound("bumper_upgrade.wav");
             entity.getViewComponent().setView(upgradeView);
             time = 0;
             isUpgraded = true;

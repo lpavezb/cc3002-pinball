@@ -48,6 +48,9 @@ public class GUI extends GameApplication {
     protected void initGameVars(Map<String, Object> vars) {
         vars.put("score", 0);
         vars.put("lives", 5);
+        vars.put("tExtraBallBonus", 0);
+        vars.put("tJackPotBonus", 0);
+        vars.put("tDropTargetBonus", 0);
     }
 
     @Override
@@ -77,6 +80,18 @@ public class GUI extends GameApplication {
 
     @Override
     protected void onUpdate(double tpf) {
+        int eBB = game.getExtraBallBonus().timesTriggered();
+        int jPB = game.getJackPotBonus().timesTriggered();
+        int dTB = game.getDropTargetBonus().timesTriggered();
+        if (eBB > getGameState().getInt("tExtraBallBonus"))
+            getAudioPlayer().playSound("extra_ball_bonus.wav");
+        if (jPB > getGameState().getInt("tJackPotBonus"))
+            getAudioPlayer().playSound("jackpot_bonus.wav");
+        if (dTB > getGameState().getInt("tDropTargetBonus"))
+            getAudioPlayer().playSound("drop_target_bonus.wav");
+        getGameState().setValue("tExtraBallBonus", eBB);
+        getGameState().setValue("tJackPotBonus", jPB);
+        getGameState().setValue("tDropTargetBonus", dTB);
         getGameState().setValue("score", game.getCurrentScore());
         getGameState().setValue("lives", game.getAvailableBalls());
     }
@@ -225,7 +240,7 @@ public class GUI extends GameApplication {
             protected void onCollisionBegin(Entity a, Entity b) {
                 a.getComponent(BumperControl.class).hit();
                 sparks(b);
-                //TODO: play bumper sound
+                getAudioPlayer().playSound("hit_bumper.wav");
             }
         });
         world.addCollisionHandler(new CollisionHandler(GameType.TARGET, GameType.BALL) {
@@ -233,7 +248,7 @@ public class GUI extends GameApplication {
             protected void onCollisionBegin(Entity a, Entity b) {
                 a.getComponent(TargetControl.class).hit();
                 sparks(b);
-                //TODO: play target sound
+                getAudioPlayer().playSound("hit_target.wav");
             }
         });
     }
