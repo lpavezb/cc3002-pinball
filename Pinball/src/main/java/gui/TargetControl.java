@@ -1,44 +1,39 @@
 package gui;
 
+import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import logic.gameelements.bumper.Bumper;
 import logic.gameelements.target.Target;
 
 public class TargetControl extends Component {
     private Target target;
-    private int timeControl;
-    private int time;
+
     private Node upgradeView;
     private Node startView;
     private boolean isActive;
 
     @Override
     public void onUpdate(double tpf) {
-        timeControl+=1;
-        if (timeControl%60==0) {
-            time += 1;
-        }
+
         if(!target.isActive() && isActive){
             entity.getViewComponent().setView(upgradeView);
-            time = 0;
             isActive = false;
-        }
-        if((!target.isActive() && time==20) || target.isActive() && !isActive){
-            target.reset();
-            entity.setView(startView);
-            isActive = true;
+            FXGL.getMasterTimer().runOnceAfter(() -> {
+                target.reset();
+                entity.setView(startView);
+                isActive = true;
+            }, Duration.seconds(20));
         }
     }
 
     public TargetControl(Target target){
         int size = 40;
         this.target= target;
-        time = 0;
-        timeControl = 0;
         isActive = true;
         if (target.isDropTarget()) {
             startView = new Rectangle(size, size, Color.YELLOW);

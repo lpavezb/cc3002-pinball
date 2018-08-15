@@ -58,24 +58,7 @@ public class PinballFactory {
     }
 
     public Entity newWalls(){
-        double w = (double)FXGL.getSettings().getWidth();
-        double h = (double)FXGL.getSettings().getHeight();
-        double thickness = 100;
         Entity walls = Entities.makeScreenBounds(100);
-        /*
-        TODO: use Entities.makeScreenBounds
-        al usar makeScreenBounds lanza error al remover bolita
-        Message: null
-        Type: NullPointerException
-        Method: Fixture.getProxyId()
-        Line: Fixture.java:263
-        */
-        /*Entity walls = Entities.builder()
-                .bbox(new HitBox("LEFT", new Point2D(-thickness, 0.0D), BoundingShape.box(thickness, h)))
-                .bbox(new HitBox("RIGHT", new Point2D(w, 0.0D), BoundingShape.box(thickness, h)))
-                .bbox(new HitBox("TOP", new Point2D(0.0D, -thickness), BoundingShape.box(w, thickness)))
-                .bbox(new HitBox("BOT", new Point2D(0.0D, h), BoundingShape.box(w, thickness)))
-                .with(new PhysicsComponent()).build();*/
         walls.setType(GameType.WALL);
         walls.addComponent(new CollidableComponent(true));
         return walls;
