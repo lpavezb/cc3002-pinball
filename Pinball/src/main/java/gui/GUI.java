@@ -207,13 +207,13 @@ public class GUI extends GameApplication {
             Point2D point = getPoint(invalidPositions);
             entities.add(factory.newPopBumper(popBumper, point));
         }
-
+        //create DropTargets
         List<DropTarget> dropTargets = gameTable.getDropTargets();
         for(DropTarget dropTarget : dropTargets){
             Point2D point = getPoint(invalidPositions);
             entities.add(factory.newDropTarget(dropTarget, point));
         }
-
+        //create SpotTargets
         List<SpotTarget> spotTargets = gameTable.getSpotTargets();
         for(SpotTarget spotTarget : spotTargets){
             Point2D point = getPoint(invalidPositions);

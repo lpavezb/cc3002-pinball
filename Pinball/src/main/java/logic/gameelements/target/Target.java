@@ -27,7 +27,4 @@ public interface Target extends Hittable {
      * Sets the active state.
      */
     void setActive(boolean activate);
-
-    boolean isDropTarget();
-    boolean isSpotTarget();
 }

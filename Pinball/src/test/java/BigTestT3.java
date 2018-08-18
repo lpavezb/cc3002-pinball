@@ -498,7 +498,7 @@ public class BigTestT3 {
                 .collect(Collectors.toList());
 
         assertEquals(numberOfInitialBalls, hw2.getAvailableBalls());
-
+        bumpers.get(0).setSeed(456440); //random.nextDouble < 0.1
         repeat(10, () -> {
             repeat(6, () -> bumpers.forEach(Hittable::hit));
             bumpers.forEach(Bumper::downgrade);

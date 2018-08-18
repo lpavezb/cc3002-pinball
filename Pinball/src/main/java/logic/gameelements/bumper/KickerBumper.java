@@ -19,9 +19,4 @@ public class KickerBumper extends AbstractBumper {
 
     @Override
     public void accept(Visitor visitor) { visitor.visitKickerBumper(this); }
-
-    @Override
-    public boolean isKickerBumper() {
-        return true;
-    }
 }

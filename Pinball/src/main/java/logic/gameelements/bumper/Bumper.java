@@ -33,7 +33,4 @@ public interface Bumper extends Hittable {
      * Downgrades a bumper making {@link #isUpgraded()} return false.
      */
     void downgrade();
-
-    boolean isPopBumper();
-    boolean isKickerBumper();
 }

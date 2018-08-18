@@ -71,14 +71,4 @@ public abstract class AbstractBumper extends AbstractHittable implements Bumper 
             notifyUp(new ExtraBallBonusVisitor());
         }
     }
-
-    @Override
-    public boolean isKickerBumper() {
-        return false;
-    }
-
-    @Override
-    public boolean isPopBumper() {
-        return false;
-    }
 }
