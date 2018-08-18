@@ -6,15 +6,16 @@ import javafx.scene.Node;
 import logic.gameelements.target.Target;
 
 public class TargetControl extends Component {
+    private Target target;
+    private boolean isActive;
+    private Node upgradeView;
+    private Node startView;
     private String sound;
     private String startSound;
     private String deactivateSound;
-    private Target target;
+    private int reactivateTime;
     private int timeControl;
     private int time;
-    private Node upgradeView;
-    private Node startView;
-    private boolean isActive;
 
     @Override
     public void onUpdate(double tpf) {
@@ -35,9 +36,10 @@ public class TargetControl extends Component {
             activate();
     }
 
-    public TargetControl(Target target, Node startView, Node upgradeView, String sound){
+    public TargetControl(Target target, Node startView, Node upgradeView, String sound, int reactivateTime){
         time = timeControl = 0;
         isActive = true;
+        this.reactivateTime = reactivateTime;
         this.target= target;
         this.startView = startView;
         this.upgradeView = upgradeView;

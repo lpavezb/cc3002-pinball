@@ -11,6 +11,7 @@ public class TargetControlFactory {
     private Node upgradeView;
     private Target target;
     private String sound;
+    private int reactivateTime;
 
     public TargetControlFactory(){
         int size = 40;
@@ -18,6 +19,7 @@ public class TargetControlFactory {
         upgradeView = new Rectangle(size, size, Color.RED);
         target = new DropTarget();
         sound = "DropTarget.wav";
+        reactivateTime = 120;
     }
 
     public TargetControlFactory setTarget(Target target) {
@@ -40,7 +42,12 @@ public class TargetControlFactory {
         return this;
     }
 
+    public TargetControlFactory setReactivateTime(int time) {
+        reactivateTime = time;
+        return this;
+    }
+
     public TargetControl build(){
-        return new TargetControl(target, startView, upgradeView, sound);
+        return new TargetControl(target, startView, upgradeView, sound, reactivateTime);
     }
 }

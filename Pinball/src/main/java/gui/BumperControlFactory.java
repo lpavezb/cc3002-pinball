@@ -11,12 +11,14 @@ public class BumperControlFactory {
     private Node upgradeView;
     private Bumper bumper;
     private String sound;
+    private int upgradeTime;
 
     public BumperControlFactory(){
         startView = new Circle(20, Color.BLUE);
         upgradeView = new Circle(20, Color.DARKGREEN);
         bumper = new KickerBumper();
         sound = "KickerBumper.wav";
+        upgradeTime = 10;
     }
 
     public BumperControlFactory setBumper(Bumper bumper) {
@@ -39,7 +41,12 @@ public class BumperControlFactory {
         return this;
     }
 
+    public BumperControlFactory setUpgradeTime(int time) {
+        this.upgradeTime = time;
+        return this;
+    }
+
     public BumperControl build(){
-        return new BumperControl(bumper, startView, upgradeView, sound);
+        return new BumperControl(bumper, startView, upgradeView, sound, upgradeTime);
     }
 }

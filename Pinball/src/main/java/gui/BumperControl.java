@@ -3,9 +3,6 @@ package gui;
 import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.util.Duration;
 import logic.gameelements.bumper.Bumper;
 
 public class BumperControl extends Component {
@@ -14,6 +11,7 @@ public class BumperControl extends Component {
     private String sound;
     private String startSound;
     private String upgradeSound;
+    private int upgradeTime;
     private Bumper bumper;
     private Node upgradeView;
     private Node startView;
@@ -34,13 +32,14 @@ public class BumperControl extends Component {
         if(downgraded()){
             downgrade();
         }
-        if(bumper.isUpgraded() && time==100){
+        if(bumper.isUpgraded() && time==upgradeTime){
             downgrade();
         }
     }
 
-    public BumperControl(Bumper bumper, Node startView, Node upgradeView, String sound){
+    public BumperControl(Bumper bumper, Node startView, Node upgradeView, String sound, int upgradeTime){
         isUpgraded = false;
+        this.upgradeTime = upgradeTime;
         this.bumper = bumper;
         this.startView = startView;
         this.upgradeView = upgradeView;

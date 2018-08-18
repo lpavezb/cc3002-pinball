@@ -17,7 +17,6 @@ import logic.gameelements.bumper.KickerBumper;
 import logic.gameelements.bumper.PopBumper;
 import logic.gameelements.target.DropTarget;
 import logic.gameelements.target.SpotTarget;
-import logic.gameelements.target.Target;
 
 public class PinballFactory {
 
@@ -96,6 +95,7 @@ public class PinballFactory {
                 .setStartView(startView)
                 .setUpgradeView(upgradeView)
                 .setSound("KickerBumper.wav")
+                .setUpgradeTime(10)
                 .build());
         return newBumper;
     }
@@ -111,6 +111,7 @@ public class PinballFactory {
                 .setStartView(startView)
                 .setUpgradeView(upgradeView)
                 .setSound("PopBumper.wav")
+                .setUpgradeTime(6)
                 .build());
         return newBumper;
     }
@@ -127,6 +128,7 @@ public class PinballFactory {
                 .setStartView(startView)
                 .setUpgradeView(upgradeView)
                 .setSound("DropTarget.wav")
+                .setReactivateTime(120)
                 .build());
         return newTarget;
     }
@@ -143,6 +145,7 @@ public class PinballFactory {
                 .setStartView(startView)
                 .setUpgradeView(upgradeView)
                 .setSound("SpotTarget.wav")
+                .setReactivateTime(20)
                 .build());
         return newTarget;
     }
