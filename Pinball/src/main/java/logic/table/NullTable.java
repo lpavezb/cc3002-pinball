@@ -37,7 +37,7 @@ public class NullTable extends Observable implements Table {
     public List<Target> getTargets() { return new ArrayList<>(); }
 
     @Override
-    public List<logic.gameelements.target.SpotTarget> getSpotTargets() { return new ArrayList<>(); }
+    public List<SpotTarget> getSpotTargets() { return new ArrayList<>(); }
     @Override
     public List<DropTarget> getDropTargets() { return new ArrayList<>(); }
 
