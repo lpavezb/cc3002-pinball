@@ -77,6 +77,22 @@ public class GUI extends GameApplication {
             y=80;
             x+=40;
         }
+
+        getGameState().<Integer>addListener("tExtraBallBonus", (old, newScore) -> {
+            if (!old.equals(newScore)) {
+                getAudioPlayer().playSound("ExtraBallBonus.wav");
+            }
+        });
+        getGameState().<Integer>addListener("tJackPotBonus", (old, newScore) -> {
+            if (!old.equals(newScore)) {
+                getAudioPlayer().playSound("JackPotBonus.wav");
+            }
+        });
+        getGameState().<Integer>addListener("tDropTargetBonus", (old, newScore) -> {
+            if (!old.equals(newScore)) {
+                getAudioPlayer().playSound("DropTargetBonus.wav");
+            }
+        });
     }
 
     @Override
@@ -84,12 +100,6 @@ public class GUI extends GameApplication {
         int eBB = game.getExtraBallBonus().timesTriggered();
         int jPB = game.getJackPotBonus().timesTriggered();
         int dTB = game.getDropTargetBonus().timesTriggered();
-        if (eBB > getGameState().getInt("tExtraBallBonus"))
-            getAudioPlayer().playSound("ExtraBallBonus.wav");
-        if (jPB > getGameState().getInt("tJackPotBonus"))
-            getAudioPlayer().playSound("JackPotBonus.wav");
-        if (dTB > getGameState().getInt("tDropTargetBonus"))
-            getAudioPlayer().playSound("DropTargetBonus.wav");
         getGameState().setValue("tExtraBallBonus", eBB);
         getGameState().setValue("tJackPotBonus", jPB);
         getGameState().setValue("tDropTargetBonus", dTB);
@@ -299,6 +309,10 @@ public class GUI extends GameApplication {
 
         // 4. add entity to game world
         getGameWorld().addEntity(sparks);
+    }
+
+    private void showGameOver() {
+        getDisplay().showMessageBox("you ran out of lives\nThanks for playing", this::exit);
     }
 
     public static void main(String[] args) {
