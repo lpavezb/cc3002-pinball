@@ -15,7 +15,7 @@ public class NullTableTest {
 
     @Test
     public void getName(){
-        assertEquals("There is no table", table.getTableName());
+        assertEquals("", table.getTableName());
     }
 
     @Test
