@@ -1,6 +1,7 @@
 package gui;
 
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.GameWorld;
 import com.almasb.fxgl.input.Input;
@@ -15,10 +16,15 @@ import controller.Game;
 import javafx.geometry.Point2D;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import logic.gameelements.bumper.Bumper;
+import logic.gameelements.bumper.KickerBumper;
+import logic.gameelements.bumper.PopBumper;
+import logic.gameelements.target.DropTarget;
+import logic.gameelements.target.SpotTarget;
 import logic.gameelements.target.Target;
 import logic.table.Table;
 import logic.table.TableFactory;
@@ -84,11 +90,11 @@ public class GUI extends GameApplication {
         int jPB = game.getJackPotBonus().timesTriggered();
         int dTB = game.getDropTargetBonus().timesTriggered();
         if (eBB > getGameState().getInt("tExtraBallBonus"))
-            getAudioPlayer().playSound("extra_ball_bonus.wav");
+            getAudioPlayer().playSound("ExtraBallBonus.wav");
         if (jPB > getGameState().getInt("tJackPotBonus"))
-            getAudioPlayer().playSound("jackpot_bonus.wav");
+            getAudioPlayer().playSound("JackPotBonus.wav");
         if (dTB > getGameState().getInt("tDropTargetBonus"))
-            getAudioPlayer().playSound("drop_target_bonus.wav");
+            getAudioPlayer().playSound("DropTargetBonus.wav");
         getGameState().setValue("tExtraBallBonus", eBB);
         getGameState().setValue("tJackPotBonus", jPB);
         getGameState().setValue("tDropTargetBonus", dTB);
@@ -166,9 +172,9 @@ public class GUI extends GameApplication {
         input.addAction(new UserAction("NewTable") {
             @Override
             protected void onActionBegin() {
-                game.setGameTable(new TableFactory().setNumberOfBumpers(2)
-                                                    .setNumberOfDropTargets(2)
-                                                    .setNumberOfTargets(2)
+                game.setGameTable(new TableFactory().setNumberOfBumpers(3)
+                                                    .setNumberOfDropTargets(3)
+                                                    .setNumberOfTargets(3)
                                                     .createTable());
                 deleteElements();
                 createElements();
@@ -186,18 +192,44 @@ public class GUI extends GameApplication {
     private void createElements() {
 
         List<Point2D> invalidPositions = new ArrayList<>();
+        List<Entity> entities = new ArrayList<>();
         Table gameTable = game.getCurrentTable();
-        List<Bumper> bumpers = gameTable.getBumpers();
-        List<Target> targets = gameTable.getTargets();
-        for (Bumper bumper : bumpers) {
+
+        //create KickerBumpers
+        List<KickerBumper> kickerBumpers = gameTable.getKickerBumpers();
+        for (KickerBumper kickerBumper : kickerBumpers) {
             Point2D point = getPoint(invalidPositions);
-            Entity newBumper = factory.newBumper(bumper, point);
-            getGameWorld().addEntity(newBumper);
+            entities.add(factory.newKickerBumper(kickerBumper, point));
         }
-        for (Target target : targets) {
+        //create PopBumpers
+        List<PopBumper> popBumpers = gameTable.getPopBumpers();
+        for (PopBumper popBumper : popBumpers) {
             Point2D point = getPoint(invalidPositions);
-            Entity newTarget = factory.newTarget(target, point);
-            getGameWorld().addEntity(newTarget);
+            entities.add(factory.newPopBumper(popBumper, point));
+        }
+
+        List<DropTarget> dropTargets = gameTable.getDropTargets();
+        for(DropTarget dropTarget : dropTargets){
+            Point2D point = getPoint(invalidPositions);
+            entities.add(factory.newDropTarget(dropTarget, point));
+        }
+
+        List<SpotTarget> spotTargets = gameTable.getSpotTargets();
+        for(SpotTarget spotTarget : spotTargets){
+            Point2D point = getPoint(invalidPositions);
+            entities.add(factory.newSpotTarget(spotTarget, point));
+        }
+
+        for(Entity entity : entities) {
+            getGameWorld().addEntity(entity);
+        }
+
+        //add mouse events
+        for(Entity entity : entities) {
+            if(entity.getType()==GameType.BUMPER)
+                entity.getView().setOnMouseClicked(e -> entity.getComponent(BumperControl.class).hit());
+            if(entity.getType()==GameType.TARGET)
+                entity.getView().setOnMouseClicked(e -> entity.getComponent(TargetControl.class).hit());
         }
     }
 
@@ -240,7 +272,6 @@ public class GUI extends GameApplication {
             protected void onCollisionBegin(Entity a, Entity b) {
                 a.getComponent(BumperControl.class).hit();
                 sparks(b);
-                getAudioPlayer().playSound("hit_bumper.wav");
             }
         });
         world.addCollisionHandler(new CollisionHandler(GameType.TARGET, GameType.BALL) {
@@ -248,7 +279,6 @@ public class GUI extends GameApplication {
             protected void onCollisionBegin(Entity a, Entity b) {
                 a.getComponent(TargetControl.class).hit();
                 sparks(b);
-                getAudioPlayer().playSound("hit_target.wav");
             }
         });
     }

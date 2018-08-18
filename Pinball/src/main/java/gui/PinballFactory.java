@@ -1,8 +1,5 @@
 package gui;
 
-import com.almasb.fxgl.app.FXGL;
-import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
@@ -15,9 +12,11 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Rectangle;
-import logic.gameelements.bumper.Bumper;
+import logic.gameelements.bumper.KickerBumper;
+import logic.gameelements.bumper.PopBumper;
+import logic.gameelements.target.DropTarget;
+import logic.gameelements.target.SpotTarget;
 import logic.gameelements.target.Target;
 
 public class PinballFactory {
@@ -73,47 +72,78 @@ public class PinballFactory {
                 .build();
     }
 
-    public Entity newBumper(Bumper aBumper, Point2D position) {
-        Node view;
-        if (aBumper.isKickerBumper())
-            view = new Circle(20, Color.BLUE);
-        else
-            view = new Circle(20, Color.CYAN);
-
+    private Entity newHittable(Point2D position) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.STATIC);
         physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.1f).friction(0f));
         Entity bumper = Entities.builder()
                 .at(position)
-                .type(GameType.BUMPER)
-                .bbox(new HitBox("Target", BoundingShape.circle(20)))
-                .viewFromNode(view)
+                .bbox(new HitBox("Hittable", BoundingShape.circle(20)))
                 .with(physics)
                 .build();
         bumper.addComponent(new CollidableComponent(true));
-        bumper.addComponent(new BumperControl(aBumper));
         return bumper;
     }
 
-    public Entity newTarget(Target target, Point2D position) {
-        Node view;
-        int size = 40;
-        if (target.isDropTarget())
-            view = new Rectangle(size, size, Color.YELLOW);
-        else
-            view = new Rectangle(size, size, Color.WHITE);
+    public Entity newKickerBumper(KickerBumper kickerBumper, Point2D position) {
+        Node startView = new Circle(20, Color.BLUE);
+        Node upgradeView = new Circle(20, Color.DARKGREEN);
+        Entity newBumper = newHittable(position);
+        newBumper.setView(startView);
+        newBumper.setType(GameType.BUMPER);
+        newBumper.addComponent(new BumperControlFactory()
+                .setBumper(kickerBumper)
+                .setStartView(startView)
+                .setUpgradeView(upgradeView)
+                .setSound("KickerBumper.wav")
+                .build());
+        return newBumper;
+    }
 
-        PhysicsComponent physics = new PhysicsComponent();
-        physics.setBodyType(BodyType.STATIC);
-        physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.1f).friction(0f));
-        Entity bumper = Entities.builder()
-                .at(position)
-                .type(GameType.TARGET)
-                .viewFromNodeWithBBox(view)
-                .with(physics)
-                .build();
-        bumper.addComponent(new CollidableComponent(true));
-        bumper.addComponent(new TargetControl(target));
-        return bumper;
+    public Entity newPopBumper(PopBumper popBumper, Point2D position) {
+        Node startView = new Circle(20, Color.CYAN);
+        Node upgradeView = new Circle(20, Color.LAWNGREEN);
+        Entity newBumper = newHittable(position);
+        newBumper.setView(startView);
+        newBumper.setType(GameType.BUMPER);
+        newBumper.addComponent(new BumperControlFactory()
+                .setBumper(popBumper)
+                .setStartView(startView)
+                .setUpgradeView(upgradeView)
+                .setSound("PopBumper.wav")
+                .build());
+        return newBumper;
+    }
+
+    public Entity newDropTarget(DropTarget dropTarget, Point2D position) {
+        int size = 40;
+        Node startView = new Rectangle(size, size, Color.YELLOW);
+        Node upgradeView = new Rectangle(size, size, Color.RED);
+        Entity newTarget = newHittable(position);
+        newTarget.setView(startView);
+        newTarget.setType(GameType.TARGET);
+        newTarget.addComponent(new TargetControlFactory()
+                .setTarget(dropTarget)
+                .setStartView(startView)
+                .setUpgradeView(upgradeView)
+                .setSound("DropTarget.wav")
+                .build());
+        return newTarget;
+    }
+
+    public Entity newSpotTarget(SpotTarget spotTarget, Point2D position) {
+        int size = 40;
+        Node startView = new Rectangle(size, size, Color.WHITE);
+        Node upgradeView = new Rectangle(size, size, Color.PURPLE);
+        Entity newTarget = newHittable(position);
+        newTarget.setView(startView);
+        newTarget.setType(GameType.TARGET);
+        newTarget.addComponent(new TargetControlFactory()
+                .setTarget(spotTarget)
+                .setStartView(startView)
+                .setUpgradeView(upgradeView)
+                .setSound("SpotTarget.wav")
+                .build());
+        return newTarget;
     }
 }

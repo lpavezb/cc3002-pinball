@@ -9,6 +9,11 @@ import javafx.util.Duration;
 import logic.gameelements.bumper.Bumper;
 
 public class BumperControl extends Component {
+    private int timeControl;
+    private int time;
+    private String sound;
+    private String startSound;
+    private String upgradeSound;
     private Bumper bumper;
     private Node upgradeView;
     private Node startView;
@@ -16,34 +21,51 @@ public class BumperControl extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        if(bumper.isUpgraded() && !isUpgraded){
-            FXGL.getAudioPlayer().playSound("bumper_upgrade.wav");
+        timeControl+=1;
+        if (timeControl%60==0)
+            time += 1;
+        if(upgraded()){
+            FXGL.getAudioPlayer().playSound("BumperUpgrade.wav");
             entity.getViewComponent().setView(upgradeView);
+            sound = upgradeSound;
             isUpgraded = true;
-            FXGL.getMasterTimer().runOnceAfter(() -> {
-                bumper.downgrade();
-                entity.setView(startView);
-                isUpgraded = false;
-            }, Duration.seconds(10));
+            time = 0;
+        }
+        if(downgraded()){
+            downgrade();
+        }
+        if(bumper.isUpgraded() && time==100){
+            downgrade();
         }
     }
 
-    public BumperControl(Bumper bumper){
-        this.bumper = bumper;
+    public BumperControl(Bumper bumper, Node startView, Node upgradeView, String sound){
         isUpgraded = false;
-        if (bumper.isKickerBumper()) {
-            startView = new Circle(20, Color.BLUE);
-            upgradeView = new Circle(20, Color.DARKGREEN);
-        }
-        else {
-            startView = new Circle(20, Color.CYAN);
-            upgradeView = new Circle(20, Color.LAWNGREEN);
-        }
+        this.bumper = bumper;
+        this.startView = startView;
+        this.upgradeView = upgradeView;
+        this.sound = sound;
+        this.startSound= sound;
+        upgradeSound = sound.replace(".", "2.");
     }
 
     public void hit() {
         bumper.hit();
+        FXGL.getAudioPlayer().playSound(sound);
     }
 
+    private boolean upgraded(){
+        return bumper.isUpgraded() && !isUpgraded;
+    }
 
+    private boolean downgraded(){
+        return !bumper.isUpgraded() && isUpgraded;
+    }
+
+    private void downgrade(){
+        bumper.downgrade();
+        entity.getViewComponent().setView(startView);
+        isUpgraded = false;
+        sound = startSound;
+    }
 }
