@@ -6,6 +6,12 @@ import javafx.scene.shape.Rectangle;
 import logic.gameelements.target.DropTarget;
 import logic.gameelements.target.Target;
 
+/**
+ * Factory Class to build a TargetControl object
+ *
+ * @author Lukas Pavez
+ * @see TargetControl
+ */
 public class TargetControlFactory {
     private Node startView;
     private Node upgradeView;

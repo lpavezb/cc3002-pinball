@@ -5,6 +5,12 @@ import com.almasb.fxgl.entity.components.PositionComponent;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.geometry.Point2D;
 
+/**
+ * Class for controlling a flipper component
+ *
+ * @author Lukas Pavez
+ * @see Component
+ */
 public class FlipperControl extends Component {
     private int minAngle;
     private int maxAngle;

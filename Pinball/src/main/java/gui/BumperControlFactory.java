@@ -6,6 +6,12 @@ import javafx.scene.shape.Circle;
 import logic.gameelements.bumper.Bumper;
 import logic.gameelements.bumper.KickerBumper;
 
+/**
+ * Factory Class to build a BumperControl object
+ *
+ * @author Lukas Pavez
+ * @see BumperControl
+ */
 public class BumperControlFactory {
     private Node startView;
     private Node upgradeView;

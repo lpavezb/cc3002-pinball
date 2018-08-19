@@ -30,6 +30,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * Pinball Game
+ *
+ * Main App class
+ *
+ * @author Lukas Pavez
+ *
+ * @see GameApplication
+ */
 public class GUI extends GameApplication {
     private int inGameBalls;
     private Game game;
@@ -66,6 +75,7 @@ public class GUI extends GameApplication {
         getGameScene().setBackgroundColor(Color.BLACK);
         getGameWorld().addEntities(walls, leftFlipper, rightFlipper, infoBar);
 
+        // init positions for hittables
         hittableAvailablePositions = new Point2D[14][6];
         int x = 20;
         int y = 80;
@@ -78,6 +88,12 @@ public class GUI extends GameApplication {
             x+=40;
         }
 
+        getGameState().<Integer>addListener("lives", (old, newScore) -> {
+            if (newScore == 0)
+                showGameOver();
+        });
+
+        //bonus sounds
         getGameState().<Integer>addListener("tExtraBallBonus", (old, newScore) -> {
             if (!old.equals(newScore)) {
                 getAudioPlayer().playSound("ExtraBallBonus.wav");
@@ -312,7 +328,7 @@ public class GUI extends GameApplication {
     }
 
     private void showGameOver() {
-        getDisplay().showMessageBox("you ran out of lives\nThanks for playing", this::exit);
+        getDisplay().showMessageBox("You ran out of lives!\nThanks for playing", this::exit);
     }
 
     public static void main(String[] args) {

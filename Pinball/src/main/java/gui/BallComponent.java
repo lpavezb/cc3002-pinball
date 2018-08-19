@@ -27,26 +27,27 @@ package gui;
  */
 
 
-import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
-import javafx.geometry.Point2D;
 
 /**
+ * Class for controlling a ball component
+ *
  * @author Almas Baimagambetov (AlmasB) (almaslvl@gmail.com)
+ * @author Lukas Pavez
+ * @see Component
  */
 public class BallComponent extends Component {
 
     private PhysicsComponent physics;
     private int maxVelocity = 8;
+
     @Override
     public void onUpdate(double tpf) {
         limitVelocity();
     }
 
     private void limitVelocity() {
-        /*if (entity.getY()>600)
-            entity.removeFromWorld();*/
         if (Math.abs(physics.getLinearVelocity().getX()) < maxVelocity * 60) {
             physics.setLinearVelocity(Math.signum(physics.getLinearVelocity().getX()) * maxVelocity * 60,
                     physics.getLinearVelocity().getY());

@@ -18,6 +18,12 @@ import logic.gameelements.bumper.PopBumper;
 import logic.gameelements.target.DropTarget;
 import logic.gameelements.target.SpotTarget;
 
+/**
+ * Factory class for building the game Entities
+ *
+ * @author Lukas Pavez
+ * @see Entity
+ */
 public class PinballFactory {
 
     public Entity newBall(double x, double y) {

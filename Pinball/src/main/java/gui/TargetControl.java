@@ -5,6 +5,12 @@ import com.almasb.fxgl.entity.component.Component;
 import javafx.scene.Node;
 import logic.gameelements.target.Target;
 
+/**
+ * Class for controlling a target component
+ *
+ * @author Lukas Pavez
+ * @see Component
+ */
 public class TargetControl extends Component {
     private Target target;
     private boolean isActive;
@@ -32,7 +38,7 @@ public class TargetControl extends Component {
         if (activated())
             activate();
 
-        if((!target.isActive() && time==200))
+        if((!target.isActive() && time==reactivateTime))
             activate();
     }
 

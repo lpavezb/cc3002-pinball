@@ -5,6 +5,12 @@ import com.almasb.fxgl.entity.component.Component;
 import javafx.scene.Node;
 import logic.gameelements.bumper.Bumper;
 
+/**
+ * Class for controlling a bumper component
+ *
+ * @author Lukas Pavez
+ * @see Component
+ */
 public class BumperControl extends Component {
     private int timeControl;
     private int time;
