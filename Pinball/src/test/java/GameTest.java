@@ -63,14 +63,14 @@ public class GameTest {
 
     @Test
     public void ballTest(){
-        assertEquals(5, game.getBalls());
+        assertEquals(5, game.getAvailableBalls());
         game.dropBall();
-        assertEquals(4, game.getBalls());
+        assertEquals(4, game.getAvailableBalls());
         game.dropBall(); //3
         game.dropBall(); //2
         game.dropBall(); //1
         game.dropBall(); //0
         game.dropBall(); //0
-        assertEquals(0, game.getBalls());
+        assertEquals(0, game.getAvailableBalls());
     }
 }

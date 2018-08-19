@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
 
-public class BigTestT3 {
+public class BigTestT3Modified {
     private HomeworkTwoFacade hw2;
     private final int numberOfInitialBalls = 5;
 
@@ -61,6 +61,9 @@ public class BigTestT3 {
         assertTrue(table.getBumpers().isEmpty());
         assertTrue(table.getTargets().isEmpty());
         assertFalse(table.isPlayableTable());
+
+        //balls
+        assertEquals(numberOfInitialBalls, hw2.getAvailableBalls());
     }
 
     @Test
@@ -490,27 +493,23 @@ public class BigTestT3 {
     @Test
     public void testExtraBallBonus() {
         hw2.setGameTable(hw2.newFullPlayableTable("Test", 100, 0.5, 10, 100));
+        Table table = hw2.getCurrentTable();
         List<Bumper> bumpers = hw2.getBumpers();
-        List<Target> targets = hw2.getTargets();
-        List<Target> dropTargetList = targets
-                .stream()
-                .filter(target -> target instanceof DropTarget)
-                .collect(Collectors.toList());
+        List<DropTarget> dropTargetList = table.getDropTargets();
 
         assertEquals(numberOfInitialBalls, hw2.getAvailableBalls());
-        bumpers.get(0).setSeed(456440); //random.nextDouble < 0.1
-        repeat(10, () -> {
-            repeat(6, () -> bumpers.forEach(Hittable::hit));
-            bumpers.forEach(Bumper::downgrade);
-        });
+        Bumper bumper = bumpers.get(0);
+        bumper.setSeed(456440); //random.nextDouble < 0.1
+        repeat(10, bumper::hit); //hit until upgrade
 
-        // we'll need to use a seed later
         int moreBalls = hw2.getAvailableBalls();
         assertTrue(numberOfInitialBalls < moreBalls);
 
-        repeat(10, () -> dropTargetList.forEach(Hittable::hit));
-        assertTrue(moreBalls < hw2.getAvailableBalls());
 
+        DropTarget dropTarget = dropTargetList.get(0);
+        dropTarget.setSeed(456440); //random.nextDouble < 0.1
+        dropTarget.hit();
+        assertTrue(moreBalls < hw2.getAvailableBalls());
     }
 
     private void repeat(int n, Runnable action) {
