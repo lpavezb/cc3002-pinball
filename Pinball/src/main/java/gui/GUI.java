@@ -46,6 +46,9 @@ public class GUI extends GameApplication {
     private Entity leftFlipper;
     private Entity rightFlipper;
     private Point2D[][] hittableAvailablePositions;
+    private int numberOfBumpers;
+    private int numberOfDropTargets;
+    private int numberOfSpotTargets;
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setWidth(600);
@@ -67,6 +70,9 @@ public class GUI extends GameApplication {
     protected void initGame() {
         game = new Game();
         factory = new PinballFactory();
+        numberOfBumpers = 6;
+        numberOfDropTargets = 3;
+        numberOfSpotTargets = 3;
         Entity walls = factory.newWalls();
         Entity infoBar = factory.newInfoBar();
         inGameBalls = 0;
@@ -193,9 +199,9 @@ public class GUI extends GameApplication {
         input.addAction(new UserAction("NewTable") {
             @Override
             protected void onActionBegin() {
-                game.setGameTable(new TableFactory().setNumberOfBumpers(3)
-                                                    .setNumberOfDropTargets(3)
-                                                    .setNumberOfTargets(3)
+                game.setGameTable(new TableFactory().setNumberOfBumpers(numberOfBumpers)
+                                                    .setNumberOfDropTargets(numberOfDropTargets)
+                                                    .setNumberOfTargets(numberOfSpotTargets)
                                                     .createTable());
                 deleteElements();
                 createElements();
@@ -241,9 +247,9 @@ public class GUI extends GameApplication {
             entities.add(factory.newSpotTarget(spotTarget, point));
         }
 
-        for(Entity entity : entities) {
+        // add entities to the game world
+        for(Entity entity : entities)
             getGameWorld().addEntity(entity);
-        }
 
         //add mouse events
         for(Entity entity : entities) {
@@ -275,13 +281,7 @@ public class GUI extends GameApplication {
             @Override
             protected void onHitBoxTrigger(Entity ball, Entity wall, HitBox ballBox, HitBox wallBox) {
                 if(wallBox.getName().equals("BOT")) {
-                    Body body = ball.getComponent(PhysicsComponent.class).getBody();
                     ball.removeComponent(PhysicsComponent.class);
-
-                    getMasterTimer().runOnceAfter(() -> {
-                        getPhysicsWorld().getJBox2DWorld().destroyBody(body);
-                    }, Duration.seconds(0.1));
-
                     getGameWorld().removeEntity(ball);
                     game.dropBall();
                     inGameBalls-=1;

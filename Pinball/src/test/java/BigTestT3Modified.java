@@ -17,6 +17,11 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.*;
 
 public class BigTestT3Modified {
+    /**
+     * modifications of BigTestT3
+     * change numberOfInitialBalls from 3 to 5
+     * add seed to trigger bonus on testExtraBallBonus
+     */
     private HomeworkTwoFacade hw2;
     private final int numberOfInitialBalls = 5;
 
