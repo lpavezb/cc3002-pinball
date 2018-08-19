@@ -292,22 +292,22 @@ public class GUI extends GameApplication {
             @Override
             protected void onCollisionBegin(Entity a, Entity b) {
                 a.getComponent(BumperControl.class).hit();
-                sparks(b);
+                sparks(b.getPosition());
             }
         });
         world.addCollisionHandler(new CollisionHandler(GameType.TARGET, GameType.BALL) {
             @Override
             protected void onCollisionBegin(Entity a, Entity b) {
                 a.getComponent(TargetControl.class).hit();
-                sparks(b);
+                sparks(b.getPosition());
             }
         });
     }
 
-    private void sparks(Entity ball){
+    private void sparks(Point2D position){
         // 1. create entity
         Entity sparks = new Entity();
-        sparks.setPosition(ball.getPosition());
+        sparks.setPosition(position);
 
         // 2. create and configure emitter + component
         ParticleEmitter emitter = ParticleEmitters.newSparkEmitter();
